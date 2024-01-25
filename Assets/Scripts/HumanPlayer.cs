@@ -11,6 +11,8 @@ public class HumanPlayer : MonoBehaviour
     public UnityEvent OnCirclePress;
     public UnityEvent OnSquarePress;
     public UnityEvent OnTrianglePress;
+    public UnityEvent<Vector2>  OnRightAnalogMove;
+    public UnityEvent<Vector2> OnLeftAnalogMove;
 
 
     public float movementXRight;
@@ -28,12 +30,14 @@ public class HumanPlayer : MonoBehaviour
     {
         movementXLeft = movementVector.x;
         movementyLeft = movementVector.y;
+        OnLeftAnalogMove.Invoke(movementVector);
     }
 
     private void OnMoveRight(Vector2 movementVector)
     {
         movementXRight = movementVector.x;
         movementYRight = movementVector.y;
+        OnRightAnalogMove.Invoke(movementVector);
     }
     public void OnFire()
     {
