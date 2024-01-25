@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HumanPlayer : MonoBehaviour
 {
     [SerializeField] int playerIndex;
-    float movementXRight;
-    float movementYRight;
-    float movementXLeft;
-    float movementyLeft;
+
+    public UnityEvent OnXPress;
+    public UnityEvent OnCirclePress;
+    public UnityEvent OnSquarePress;
+    public UnityEvent OnTrianglePress;
+
+
+    public float movementXRight;
+    public float movementYRight;
+    public float movementXLeft;
+    public float movementyLeft;
+    
 
     public void init(InputMGR inputMGR)
     {
@@ -28,17 +37,21 @@ public class HumanPlayer : MonoBehaviour
     }
     public void OnFire()
     {
+        OnXPress.Invoke();
     }
 
     public void OnCircle()
     {
-
+        OnCirclePress.Invoke();
     }
     public void OnTriangle()
     {
+        OnTrianglePress.Invoke();
 
     }
     public void OnSquare()
     {
+        OnSquarePress.Invoke();
+
     }
 }
