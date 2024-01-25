@@ -26,6 +26,7 @@ public class LegsPlayerMovment : MonoBehaviour
 
     private void Move(Vector2 movement)
     {
+        print(movement);
         _movement.x = movement.x * _movmentSpeed;
         _rb.velocity = _movement;
 
