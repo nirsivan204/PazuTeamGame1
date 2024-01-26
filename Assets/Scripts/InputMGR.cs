@@ -25,7 +25,14 @@ public class InputMGR : MonoBehaviour
         {
             if (!isInit)
             {
-                if(allInputManagers[0] != this)
+/*                for (int i = 0; i < allInputManagers.Length; i++)
+                {
+                    if (allInputManagers[i] == this)
+                    {
+                        playerMovement.Init(allInputManagers[i].players[0], allInputManagers[i].players[1]);
+                    }
+                }*/
+                if (allInputManagers[0] != this)
                 {
                     playerMovement.Init(allInputManagers[0].players[0], allInputManagers[0].players[1]);
                 }
@@ -46,7 +53,7 @@ public class InputMGR : MonoBehaviour
             PIM_component.enabled = true;
             init();
             playerMovement.Init(players[0], players[1]);
-            DontDestroyOnLoad(playerMovement);
+            //DontDestroyOnLoad(playerMovement);
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(players[0]);
             DontDestroyOnLoad(players[1]);

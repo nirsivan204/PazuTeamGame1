@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 1016313378}
   - component: {fileID: 1016313380}
   m_Layer: 0
-  m_Name: InputmanagerHands
+  m_Name: InputmanagerManu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

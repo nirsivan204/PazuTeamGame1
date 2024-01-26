@@ -50,7 +50,11 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
             else
             {
-                showSecondPlayer();
+                if (!player2Show)
+                {
+                    showSecondPlayer();
+                    player2Show = true;
+                }
             }
         }
     }
@@ -59,6 +63,7 @@ public class ManuPlayerController : AbstractPlayerMovement
 
     private void OnSelect()
     {
+        print("select");
         if (_currentManu == 3)
         {
             if (player2Show && player1Show)
@@ -67,8 +72,12 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
             else
             {
-                showFirstPlayer();
-                player1Show = true;
+                if (!player1Show)
+                {
+                    showFirstPlayer();
+                    player1Show = true;
+                }
+
             }
         }
     }
@@ -76,7 +85,7 @@ public class ManuPlayerController : AbstractPlayerMovement
     {
         player2Show = true;
         print("nir");
-        LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 1);
+        LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 2);
 
     }
     private void showFirstPlayer()
