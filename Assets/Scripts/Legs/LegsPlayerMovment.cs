@@ -8,7 +8,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement
 {
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
-    [SerializeField] private RumbleManager rumbleManager;
     public static LegsPlayerMovment Instance { get; private set; }
 
     private HumanPlayer _controller1;
@@ -51,6 +50,13 @@ public class LegsPlayerMovment : AbstractPlayerMovement
         _controller2.OnXPress.AddListener(CheckJump);
         //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller2.OnTrianglePress.AddListener(Cheer);
+        _controller1.OnR1Press.AddListener(Rumble);
+        _controller1.OnL1Press.AddListener(StopRumble);
+        _controller2.OnR1Press.AddListener(Rumble);
+        _controller2.OnL1Press.AddListener(StopRumble);
+
+
+
     }
 
     public void MoveLeftStick(Vector2 movement)
@@ -64,6 +70,16 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     public void MoveRightStick(Vector2 movement)
     {
         //print("legsRight");
+    }
+
+    public void Rumble()
+    {
+        RumbleManager.RumblePulse(true,0,0.25f,1);
+    }
+
+    public void StopRumble()
+    {
+        RumbleManager.RumblePulse(false, 0, 0.25f, 1);
     }
 
     private void CheckJump()
