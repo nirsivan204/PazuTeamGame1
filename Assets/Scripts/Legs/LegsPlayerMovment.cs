@@ -6,6 +6,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
 {
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
+    [SerializeField] private RumbleManager rumbleManager;
 
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;

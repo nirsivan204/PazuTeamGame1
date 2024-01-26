@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class HumanPlayer : MonoBehaviour
 {
     [SerializeField] int playerIndex;
+    [SerializeField] float low;
+    [SerializeField] float high;
 
     public UnityEvent OnXPress;
     public UnityEvent OnCirclePress;
@@ -57,4 +60,14 @@ public class HumanPlayer : MonoBehaviour
         OnSquarePress.Invoke();
 
     }
+
+    public void StartRumble()
+    {
+        RumbleManager.RumblePulse(true, playerIndex, low, high);
+    }
+    public void StopRumble()
+    {
+        RumbleManager.RumblePulse(false, playerIndex, 0, 0);
+    }
+
 }
