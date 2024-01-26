@@ -19,6 +19,10 @@ public class TopPlayerController : AbstractPlayerMovement
     public float _dashSpeed = 3;
     public float _dashTime = 1f;
     public bool isDashing;
+    public bool isDoubleDashing;
+
+    public bool isCheering;
+    public float _cheerTime = 2;
 
     private void Awake()
     {
@@ -41,19 +45,54 @@ public class TopPlayerController : AbstractPlayerMovement
     }
     public void Dash()
     {
-        isDashing = true;
-        _speed = _dashSpeed;
+        if (isCheering)
+            return;
 
-        this.SetTimer(_dashTime,()=>
+        if (!isDashing && !isDoubleDashing)
         {
-            isDashing = false;
+            isDashing = true;
+            _speed = _dashSpeed;
+
+            this.SetTimer(_dashTime, () =>
+            {
+                if (!isDoubleDashing)
+                {
+                    isDashing = false;
+                    _speed = _regulatSpeed;
+                }
+            });
+        }
+        else if(!isDoubleDashing)
+        {
+            isDoubleDashing = true;
+            _speed = _dashSpeed * 1.5f;
+
+            this.SetTimer(_dashTime, () =>
+            {
+                isDashing = false;
+                isDoubleDashing = false;
+                _speed = _regulatSpeed;
+            });
+        }
+    }
+
+    public void Cheer()
+    {
+        Debug.Log("Cheer!");
+        if (isDashing || isDoubleDashing)
+            return;
+
+        isCheering = true;
+        this.SetTimer(_cheerTime, () =>
+        {
+            isCheering = false;
             _speed = _regulatSpeed;
         });
     }
 
     private void FixedUpdate()
     {
-        if (!isDashing)
+        if (!isDashing && !isDoubleDashing && !isCheering)
         {
             x = 0;
             y = 0;
