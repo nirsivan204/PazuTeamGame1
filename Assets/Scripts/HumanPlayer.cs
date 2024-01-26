@@ -23,13 +23,22 @@ public class HumanPlayer : MonoBehaviour
     public float movementXLeft;
     public float movementyLeft;
 
-    public void init(InputMGR inputMGR)
+    public void initController(InputMGR inputMGR)
     {
         inputMGR.ConnectToAllPlayerControllers(playerIndex, OnMoveRight, OnMoveLeft, OnFire,OnCircle,OnTriangle,OnSquare, OnMoveRight);
+        //inputMGR.ConnectToGamePadPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire,OnCircle,OnTriangle,OnSquare, OnMoveRight);
     }
+    public void initKeyboard(InputMGR inputMGR)
+    {
+        /*        inputMGR.ConnectToKeyboardPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire, null);
+        */
+        inputMGR.ConnectToKeyboardPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire, OnCircle, OnTriangle, OnSquare);
+    }
+
 
     private void OnMoveLeft(Vector2 movementVector)
     {
+        //print("move left " + movementVector);
         movementXLeft = movementVector.x;
         movementyLeft = movementVector.y;
         OnLeftAnalogMove.Invoke(movementVector);
@@ -43,6 +52,7 @@ public class HumanPlayer : MonoBehaviour
     }
     public void OnFire()
     {
+        //print(name + "fire");
         OnXPress.Invoke();
     }
 

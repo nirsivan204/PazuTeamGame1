@@ -5,7 +5,6 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 public class playerController : MonoBehaviour
 {
-    //SC_MainMenu mainMenu;
     private bool canLeave = true;
     public UnityEvent fireEvent = new UnityEvent();
     public UnityEvent squareEvent = new UnityEvent();
@@ -24,6 +23,7 @@ public class playerController : MonoBehaviour
 
     public void OnFire()
     {
+        print("fireinController");
         fireEvent.Invoke();
     }
 

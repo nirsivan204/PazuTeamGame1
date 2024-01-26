@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 2
-  m_MaxPlayerCount: 2
+  m_MaxPlayerCount: 4
   m_AllowJoining: 1
   m_JoinBehavior: 1
   m_PlayerJoinedEvent:
@@ -437,10 +437,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   playersInGame: 0
   PIM_component: {fileID: 1016313378}
   keyboardPlayers: 0
@@ -482,6 +478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 1
+  low: 0
+  high: 0
   OnXPress:
     m_PersistentCalls:
       m_Calls: []
@@ -531,9 +529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fb05ea48826d745adbba75091175f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  low: 0.7
-  high: 0.3
-  duration: 0
 --- !u!1 &1997567063
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +560,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: 0
+  low: 0
+  high: 0
   OnXPress:
     m_PersistentCalls:
       m_Calls: []
@@ -614,9 +611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fb05ea48826d745adbba75091175f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  low: 0.25
-  high: 1
-  duration: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
