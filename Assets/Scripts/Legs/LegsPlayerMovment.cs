@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static playerController;
-
 
 public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 {
@@ -21,7 +19,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private Rigidbody2D _rb;
 
     private bool _isWalking = false;
-    private bool _isIdle = true;
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
     public int StunLevel = 0;
@@ -33,8 +30,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private float _cheerTime = 2f;
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;
-
-    private float _movmentX;
 
     private void Awake()
     {
@@ -98,13 +93,30 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         }
     }
 
+    private void LateUpdate()
+    {
+        if (_rb.velocity.y > 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Up")
+        {
+            _levelAnimator.SetAddAnimation("Jump_Cycle_Up", false, 0, false);
+        }
+        else if (_rb.velocity.y < 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Down")
+        {
+            _levelAnimator.SetAddAnimation("Jump_Cycle_Down", false, 0, false);
+            _rb.gravityScale = 5;
+        }
+        else
+        {
+            _rb.gravityScale = 1;
+        }
+    }
+
     private void PlayWalkingAnimation()
     {
-        if (_isWalking)
+        if (_isWalking && _levelAnimator.GetAnimationName()!= "Walking_Loop_Full")
         {
             _levelAnimator.SetAddAnimation("Walking_Loop_Full", true, 0, false);
         }
-        else
+        else if(_levelAnimator.GetAnimationName() != "Idle")
         {
             _levelAnimator.PlayIdleAnimation();
         }
@@ -118,7 +130,14 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         }
         else
         {
-            _dirX = movement > 0 ? 1 : -1;
+            int direction = movement > 0 ? 1 : -1;
+            if (direction != _dirX)
+            {
+                _dirX = direction;  
+                Vector3 scale = gameObject.transform.lossyScale;
+                scale.x = -(_dirX);
+                gameObject.transform.localScale = scale;
+            }
         }
     }
 
@@ -146,7 +165,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
-        _levelAnimator.SetAddAnimation("Jump_Cycle_Up", false, 0, false);
     }
 
     private void Cheer()
