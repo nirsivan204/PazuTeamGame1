@@ -32,14 +32,14 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     public void MoveLeftStick(Vector2 movement)
     {
         //print("legsLeft");
-        _movement.x = movement.x * _movmentSpeed;
-        _movement.y = movement.y * _movmentSpeed;
-
+        _movement.y = movement.x * _movmentSpeed;
         _rb.velocity = _movement;
     }
     public void MoveRightStick(Vector2 movement)
     {
         //print("legsRight");
+        _movement.x = movement.y * _movmentSpeed;
+        _rb.velocity = _movement;
     }
 
     private void Jump()
