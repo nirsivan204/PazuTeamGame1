@@ -9,6 +9,9 @@ public enum Door
     HandsDoor2,
     HandsDoor3,
     HandsDoor4,
+    HandsDoor5,
+    HandsDoor6,
+    HandsDoor7,
     LegsDoor1,
     LegsDoor2,
     LegsDoor3,
@@ -28,7 +31,6 @@ public class SlidingDoor : MonoBehaviour
     
     [SerializeField] private float _endPositionX;
     [SerializeField] private float _sliderDistancePerFrame;
-    [SerializeField] private bool _slideDoor;
     [SerializeField] private Door _door;
     
     // Start is called before the first frame update
@@ -46,21 +48,7 @@ public class SlidingDoor : MonoBehaviour
     {
         _doorListener.Dispose();
     }
-
-    /*private void OnValidate()
-    {
-        if (_slideDoor)
-        {
-            StopCoroutine(SlideDoor(_startPostionX));
-            StartCoroutine(SlideDoor(_endPositionX));
-        }
-        else
-        {
-            StopCoroutine(SlideDoor(_endPositionX));
-            StartCoroutine(SlideDoor(_startPostionX));
-        }
-    }*/
-
+    
     private void OnToggleDoor(DoorSwitchedEvent doorSwitchedEvent)
     {
         if (doorSwitchedEvent.DoorNumber != _door) return;

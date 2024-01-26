@@ -70,7 +70,6 @@ public class HumanPlayer : MonoBehaviour
     public void OnSquare()
     {
         OnSquarePress.Invoke();
-
     }
 
     public void OnR1()
