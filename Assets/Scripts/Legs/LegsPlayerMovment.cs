@@ -3,8 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static playerController;
 
-public class LegsPlayerMovment : AbstractPlayerMovement
+
+public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 {
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
@@ -19,6 +21,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement
 
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
+    public int StunLevel = 0;
+    private bool isStunned;
 
     public float _jumpCount = 0;
     private int _dirX;
@@ -26,6 +30,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     private float _cheerTime = 2f;
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;
+
+    private float _movmentX;
 
     private void Awake()
     {
@@ -35,7 +41,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
         }
         _rb = GetComponent<Rigidbody2D>();
 
-        if(TopPlayerController.Instance != null)
+        if (TopPlayerController.Instance != null)
         {
             TopPlayerController.Instance.OnCheerAction += () => _isBeingCheerd = true;
             TopPlayerController.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
@@ -47,34 +53,38 @@ public class LegsPlayerMovment : AbstractPlayerMovement
         print("init legs");
         _controller1 = controller1;
         _controller2 = controller2;
-        _controller1.OnLeftAnalogMove.AddListener(MoveLeftStick);
         _controller2.OnXPress.AddListener(CheckJump);
         //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller2.OnTrianglePress.AddListener(Cheer);
+        _controller2.OnCirclePress.AddListener(OnCirclePress);
+        _controller2.OnSquarePress.AddListener(OnSquarePress);
     }
 
-    public void MoveLeftStick(Vector2 movement)
+    private void Update()
     {
-        CheckDirection(movement);
+        if(_controller1 != null)
+        {
+            CheckDirection(_controller1.movementXLeft);
 
-        if (_jumpCount > 0)
-            return;
+            if (_controller1.movementXLeft > -0.25 && _controller1.movementXLeft < 0.25)
+                _controller1.movementXLeft = 0;
 
-        _movement.x = movement.x * _movmentSpeed;
+            if (_jumpCount > 0)
+                return;
 
-        _movement.y = _rb.velocity.y;
-        _rb.velocity = _movement;
+            _rb.velocity = new Vector2(_controller1.movementXLeft * _movmentSpeed, _rb.velocity.y);
+        }
     }
 
-    private void CheckDirection(Vector2 movement)
+    private void CheckDirection(float movement)
     {
-        if (movement.x < 0.1 && movement.x > -0.1)
+        if (movement < 0.25 && movement > -0.25)
         {
             _dirX = 0;
         }
         else
         {
-            _dirX = movement.x > 0 ? 1 : -1;
+            _dirX = movement > 0 ? 1 : -1;
         }
     }
 
@@ -87,7 +97,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     {
         if (_jumpCount == 0 || (_jumpCount == 1 & _isBeingCheerd))
         {
-            Jump();            
+            Jump();
         }
     }
 
@@ -113,22 +123,51 @@ public class LegsPlayerMovment : AbstractPlayerMovement
             _isCheering = false;
             OnCheerEndAction?.Invoke();
         });
-    }    
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Platform")
         {
-            Debug.Log("platform!");
             _jumpCount = 0;
-            //Platform platform = collision.gameObject.GetComponent<Platform>();
-            //transform.parent = platform.gameObject.transform;
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)
+
+    public void Stun(int stunAmount = 10)
     {
-        if (collision.gameObject.tag == "Platform")
+        isStunned = true;
+        StunLevel = stunAmount;
+    }
+
+    private void OnCirclePress()
+    {
+        if (!isStunned)
+            return;
+
+        if (StunLevel % 2 == 0)
         {
-            //transform.parent = null;
+            StunLevel = 0;
+            return;
         }
+
+        StunLevel++;
+    }
+
+    private void OnSquarePress()
+    {
+        if (!isStunned)
+            return;
+
+        if (StunLevel % 2 == 1)
+        {
+            StunLevel = 0;
+            return;
+        }
+
+        StunLevel++;
+    }
+
+    public void OnStun(int stunAmount)
+    {
+        throw new NotImplementedException();
     }
 }
