@@ -130,7 +130,7 @@ public class InputMGR : MonoBehaviour
         }
         //playersInputs[keyboardPlayers + gamepadPlayers] = null;
     }
-    public void ConnectToKeyboardPlayerController(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction = null, UnityAction squareAction = null, UnityAction OnR1 = null, UnityAction OnL1 = null)
+    public void ConnectToKeyboardPlayerController(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction OnR1 = null, UnityAction OnL1 = null)
     {
         if(playersInputs[playerId] != null)
         {
@@ -164,17 +164,18 @@ public class InputMGR : MonoBehaviour
             }
             if (squareAction != null)
             {
+                print(playersInputs[playerId]);
                 playersInputs[playerId].GetComponent<playerController>().squareEvent.RemoveAllListeners();
                 playersInputs[playerId].gameObject.GetComponent<playerController>().squareEvent.AddListener(squareAction);
             }
             if (OnR1 != null)
             {
-                playersInputs[playerId].GetComponent<playerController>().squareEvent.RemoveAllListeners();
+                playersInputs[playerId].GetComponent<playerController>().R1Event.RemoveAllListeners();
                 playersInputs[playerId].gameObject.GetComponent<playerController>().R1Event.AddListener(OnR1);
             }
             if (OnL1 != null)
             {
-                playersInputs[playerId].GetComponent<playerController>().squareEvent.RemoveAllListeners();
+                playersInputs[playerId].GetComponent<playerController>().L1Event.RemoveAllListeners();
                 playersInputs[playerId].gameObject.GetComponent<playerController>().L1Event.AddListener(OnL1);
             }
         }
@@ -216,7 +217,7 @@ public class InputMGR : MonoBehaviour
     {
         for (int i = 0; i < 2; i++)
         {
-            ConnectToKeyboardPlayerController(i, moveRightAction, moveLeftAction, fireAction, circleAction);
+            //ConnectToKeyboardPlayerController(i, moveRightAction, moveLeftAction, fireAction, circleAction,);
         }
     }
 
