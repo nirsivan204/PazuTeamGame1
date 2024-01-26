@@ -9,16 +9,11 @@ public class LevelAnimator : MonoBehaviour
 {
     private SkeletonAnimation _skeletonAnimation;
 
-    public const string IDLE_ANIMATINO_NAME = "";
+    public const string IDLE_ANIMATINO_NAME = "Idle";
 
     private void Awake()
     {
         _skeletonAnimation = GetComponent<SkeletonAnimation>();
-    }
-
-    public TrackEntry SetAnimation(string animationName, bool loop = false, int trackIndex = 0)
-    {
-        return SetAddAnimation(animationName, loop, trackIndex, false);
     }
 
     public TrackEntry PlayIdleAnimation()
@@ -26,7 +21,7 @@ public class LevelAnimator : MonoBehaviour
         return SetAddAnimation(IDLE_ANIMATINO_NAME, true, 0, false);
     }
 
-    private TrackEntry SetAddAnimation
+    public TrackEntry SetAddAnimation
         (
             string animationName,
             bool loop,
@@ -56,6 +51,11 @@ public class LevelAnimator : MonoBehaviour
         {
             return _skeletonAnimation.AnimationState.SetAnimation(trackIndex, animation, loop);
         }
+    }
+
+    public string GetAnimationName()
+    {
+        return _skeletonAnimation.AnimationName;
     }
 
     private float GetAnimationLength(string animationName)

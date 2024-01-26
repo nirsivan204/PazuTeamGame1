@@ -9,6 +9,8 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
 
+    public LevelAnimator levelAnimator;
+
     private float _movementXLeft;
     private float _movementYLeft;
     private float x;
@@ -18,6 +20,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     Rigidbody2D _rb;
     public float _regulatSpeed = 1;
+    public float _rotationSpeed = 1;
     public float _dashSpeed = 3;
     public float _dashTime = 1f;
     public bool isDashing;
@@ -64,6 +67,8 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         _controller1.OnCirclePress.AddListener(RightStunButton);
         _controller1.OnSquarePress.AddListener(LeftStunButton);
         _controller1.OnTrianglePress.AddListener(Cheer);
+
+        levelAnimator.PlayIdleAnimation();
     }
 
     public void MoveLeftStick(Vector2 movement)
@@ -81,6 +86,8 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         {
             isDashing = true;
             _speed = _dashSpeed;
+
+            levelAnimator.SetAddAnimation("Dash", false, 0, false);
 
             this.SetTimer(_dashTime, () =>
             {
@@ -129,6 +136,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     public void Stun(int stunAmount = 10)
     {
         isStunned = true;
+        levelAnimator.SetAddAnimation("Idle", true, 0, false);
         StunLevel = stunAmount;
         _leftStunButtonNeeded = true;
         _rightStunButtonNeeded = false;
@@ -223,6 +231,23 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         }
 
         Vector2 movement = new Vector2(x, y).normalized;
+        float magnitue = movement.magnitude;
+        if (magnitue == 0 && levelAnimator.GetAnimationName() != "Idle")
+        {
+            levelAnimator.PlayIdleAnimation();
+        }
+        else if(magnitue > .1f)
+        {
+            float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
+
+            levelAnimator.transform.rotation = Quaternion.Euler(0, 0, targetAngle - 90);
+
+            if (!isStunned && !isCheering && !isDashing && !isDoubleDashing && levelAnimator.GetAnimationName() != "Walk")
+            {
+                levelAnimator.SetAddAnimation("Walk", true, 0, false);
+            }
+        }
+
         _rb.velocity = movement * _speed;
     }
 }
