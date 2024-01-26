@@ -57,6 +57,9 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         _controller1 = controller1;
         _controller2 = controller2;
         _controller2.OnLeftAnalogMove.AddListener(MoveLeftStick);
+        _controller1.OnXPress.AddListener(Dash);
+        _controller1.OnCirclePress.AddListener(RightStunButton);
+        _controller1.OnSquarePress.AddListener(LeftStunButton);
     }
 
     public void MoveLeftStick(Vector2 movement)
@@ -66,6 +69,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     }
     public void Dash()
     {
+        print("dash");
         if (isStunned || isCheering)
             return;
 
@@ -114,6 +118,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void OnStun(int stunAmount)
     {
+        Debug.Log("Stun!!");
         Stun(stunAmount);
     }
 
@@ -127,6 +132,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void LeftStunButton()
     {
+        Debug.Log("LeftStunButton");
         if (_leftStunButtonNeeded)
         {
             StunLevel--;
@@ -147,6 +153,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void RightStunButton()
     {
+        Debug.Log("RightStunButton");
         if (_rightStunButtonNeeded)
         {
             StunLevel--;

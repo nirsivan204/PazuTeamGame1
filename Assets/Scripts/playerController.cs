@@ -50,11 +50,6 @@ public class playerController : MonoBehaviour
     public void OnCircle()
     {
         circleEvent.Invoke();
-        if (canLeave)
-        {
-            leave();
-        }
-
     }
 
     private void leave()
