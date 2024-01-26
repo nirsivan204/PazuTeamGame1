@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TopPlayerController : AbstractPlayerMovement
+public class TopPlayerController : AbstractPlayerMovement, IStunnable
 {
     public static TopPlayerController Instance { get; private set; }
     private HumanPlayer _controller1;
@@ -110,6 +110,11 @@ public class TopPlayerController : AbstractPlayerMovement
             _speed = _regulatSpeed;
             OnCheerEndAction?.Invoke();
         });
+    }
+
+    public void OnStun(int stunAmount)
+    {
+        Stun(stunAmount);
     }
 
     public void Stun(int stunAmount = 10)
