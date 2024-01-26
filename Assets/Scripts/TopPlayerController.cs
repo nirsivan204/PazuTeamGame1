@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TopPlayerController : AbstractPlayerMovement
 {
+    public static TopPlayerController Instance { get; private set; }
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
 
@@ -23,11 +25,24 @@ public class TopPlayerController : AbstractPlayerMovement
 
     public bool isCheering;
     public float _cheerTime = 2;
+    public bool _isBeingCheerd;
+
+    public event Action OnCheerAction;
+    public event Action OnCheerEndAction;
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Instance = this;
+        }
         _rb = GetComponent<Rigidbody2D>();
         _speed = _regulatSpeed;
+        if (LegsPlayerMovment.Instance != null)
+        {
+            LegsPlayerMovment.Instance.OnCheerAction += () => _isBeingCheerd = true;
+            LegsPlayerMovment.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
+        }
     }
 
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
@@ -83,10 +98,12 @@ public class TopPlayerController : AbstractPlayerMovement
             return;
 
         isCheering = true;
+        OnCheerAction?.Invoke();
         this.SetTimer(_cheerTime, () =>
         {
             isCheering = false;
             _speed = _regulatSpeed;
+            OnCheerEndAction?.Invoke();
         });
     }
 

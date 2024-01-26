@@ -1,4 +1,5 @@
 using Legs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
     [SerializeField] private RumbleManager rumbleManager;
+    public static LegsPlayerMovment Instance { get; private set; }
 
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
@@ -18,9 +20,11 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     private bool _isBeingCheerd = true;
     private bool _isGrounded = false;
     private bool _isDoubleJump = false;
-    private bool _isCheering = false; 
+    private bool _isCheering = false;
 
-    public static LegsPlayerMovment Instance { get; private set; }
+    private float _cheerTime = 2f;
+    public event Action OnCheerAction;
+    public event Action OnCheerEndAction;
 
     private void Awake()
     {
@@ -29,6 +33,12 @@ public class LegsPlayerMovment : AbstractPlayerMovement
             Instance = this;
         }
         _rb = GetComponent<Rigidbody2D>();
+
+        if(TopPlayerController.Instance != null)
+        {
+            TopPlayerController.Instance.OnCheerAction += () => _isBeingCheerd = true;
+            TopPlayerController.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
+        }
     }
 
 
@@ -64,9 +74,18 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     }
     private void Cheer()
     {
+        Debug.Log("Cheer!");
+        if (!_isGrounded)
+            return;
+
         _isCheering = true;
-        LeanTween.delayedCall(gameObject, 2f, () => _isCheering = false);
-    }
+        OnCheerAction?.Invoke();
+        this.SetTimer(_cheerTime, () =>
+        {
+            _isCheering = false;
+            OnCheerEndAction?.Invoke();
+        });
+    }    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "platform")
