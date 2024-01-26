@@ -22,6 +22,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
     private bool isStunned = false;
+    private bool _canMove = false;
+    private bool _isTouchingBorder = false;
     
     public int StunLevel = 0;
     public float _jumpCount = 0;
@@ -55,10 +57,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _controller2 = controller2;
         _controller2.OnXPress.AddListener(CheckJump);
         _controller2.OnTrianglePress.AddListener(Cheer);
-        _controller1.OnR1Press.AddListener(Rumble);
-        _controller1.OnL1Press.AddListener(StopRumble);
-        _controller2.OnR1Press.AddListener(Rumble);
-        _controller2.OnL1Press.AddListener(StopRumble);
+        _controller1.OnL1Press.AddListener(Push);
+        _controller2.OnR1Press.AddListener(Pull);
 
         _controller2.OnCirclePress.AddListener(OnCirclePress);
         _controller2.OnSquarePress.AddListener(OnSquarePress);
@@ -167,6 +167,22 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _jumpCount++;
     }
 
+    private void Push()
+    {
+        if (_canMove)
+        {
+
+        }
+    }
+
+    private void Pull()
+    {
+        if (_canMove)
+        {
+
+        }
+    }
+
     private void Cheer()
     {
         if (_jumpCount != 0)
@@ -187,6 +203,26 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         if (collision.gameObject.tag == "Platform")
         {
             _jumpCount = 0;
+        }
+        if(collision.gameObject.tag == "MovingObject")
+        {
+            _canMove = true;
+        }
+        if(collision.gameObject.tag == "Border")
+        {
+            _isTouchingBorder = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MovingObject")
+        {
+            _canMove = false;
+        }
+        if (collision.gameObject.tag == "Border")
+        {
+            _isTouchingBorder = false;
         }
     }
 
