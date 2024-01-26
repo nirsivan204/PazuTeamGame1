@@ -21,9 +21,9 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private bool _isWalking = false;
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
+    private bool isStunned = false;
+    
     public int StunLevel = 0;
-    private bool isStunned;
-
     public float _jumpCount = 0;
     private int _dirX;
 
@@ -59,7 +59,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _controller1.OnL1Press.AddListener(StopRumble);
         _controller2.OnR1Press.AddListener(Rumble);
         _controller2.OnL1Press.AddListener(StopRumble);
-        //_controller1.OnLeftAnalogMove.AddListener(PlayWalkingAnimation);
 
         _controller2.OnCirclePress.AddListener(OnCirclePress);
         _controller2.OnSquarePress.AddListener(OnSquarePress);
