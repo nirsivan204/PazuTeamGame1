@@ -389,9 +389,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5632564936731059497, guid: 0d4be5953cfbd144eaef91a47ca5d99c, type: 3}
       propertyPath: m_Name
-      value: Platform
+      value: Floor
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8664877217882042964, guid: 0d4be5953cfbd144eaef91a47ca5d99c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

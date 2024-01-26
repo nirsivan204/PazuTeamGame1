@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LegsPlayerMovment : AbstractPlayerMovement
 {
+    // yo yo
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
     [SerializeField] private RumbleManager rumbleManager;
