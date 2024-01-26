@@ -9,8 +9,8 @@ public class TopPlayerController : AbstractPlayerMovement
 
     private float _movementXLeft;
     private float _movementYLeft;
-    private float _movementXRight;
-    private float _movementYRight;
+    private float x;
+    private float y;
 
     Rigidbody2D _rb;
 
@@ -24,7 +24,7 @@ public class TopPlayerController : AbstractPlayerMovement
         print("init Hands");
         _controller1 = controller1;
         _controller2 = controller2;
-        _controller1.OnRightAnalogMove.AddListener(MoveRightStick);
+        //_controller1.OnLeftAnalogMove.AddListener(MoveRightStick);
         _controller2.OnLeftAnalogMove.AddListener(MoveLeftStick);
     }
 
@@ -36,31 +36,37 @@ public class TopPlayerController : AbstractPlayerMovement
     }
     public void MoveRightStick(Vector2 movement)
     {
-        _movementXRight = movement.x;
-        _movementYRight = movement.y;
+        //_movementXRight = movement.x;
+        //_movementYRight = movement.y;
     }
 
     private void FixedUpdate()
     {
-        if (_movementXRight < -0.25f)
+        x = 0;
+        y = 0;
+
+        if (_movementXLeft < -0.25f)
         {
-            _rb.velocity = Vector2.left;
-            Debug.Log("Left");
+            //_rb.velocity = Vector2.left;
+            x--;
         }
-        if (_movementXRight > 0.25f)
+        if (_movementXLeft > 0.25f)
         {
-            _rb.velocity = Vector2.right;
-            Debug.Log("Right");
+            //_rb.velocity = Vector2.right;
+            x++;
         }
         if (_movementYLeft > 0.25f)
         {
-            Debug.Log("Up");
-            _rb.velocity = Vector2.up;
+            //_rb.velocity = Vector2.up;
+            y++;
         }
         if (_movementYLeft < -0.25f)
         {
-            Debug.Log("Down");
-            _rb.velocity = Vector2.down;
+            //_rb.velocity = Vector2.down;
+            y--;
         }
+
+        Vector2 movement = new Vector2(x, y).normalized;
+        _rb.velocity = movement;
     }
 }
