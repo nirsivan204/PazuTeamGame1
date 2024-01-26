@@ -31,6 +31,9 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     private bool _leftStunButtonNeeded;
     private bool _rightStunButtonNeeded;
 
+    private bool _isAboveGap;
+    public float GapReactionTime = .5f;
+
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;
 
@@ -171,6 +174,23 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
                 _rightStunButtonNeeded = false;
             }
         }
+    }
+
+    public void OnGap()
+    {
+        _isAboveGap = true;
+        this.SetTimer(GapReactionTime, () =>
+         {
+             if(_isAboveGap && (!isDashing || !isDoubleDashing))
+             {
+                 Debug.Log("You Fell!!");
+             }
+         });
+    }
+
+    public void OffGap()
+    {
+        _isAboveGap = false;
     }
 
     private void FixedUpdate()
