@@ -188,7 +188,7 @@ public class InputMGR : MonoBehaviour
 
     public void ConnectToAllPlayerControllers(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction)
     {
-        ConnectToKeyboardPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction);
+        ConnectToKeyboardPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction,squareAction);
         ConnectToGamePadPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction);
     }
 
