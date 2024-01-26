@@ -23,7 +23,6 @@ public class playerController : MonoBehaviour
 
     public void OnFire()
     {
-        print("fireinController");
         fireEvent.Invoke();
     }
 
