@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static playerController;
 
@@ -31,7 +33,7 @@ public class ManuPlayerController : AbstractPlayerMovement
         _controller1.OnXPress.AddListener(OnSelect);
         //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller1.OnCirclePress.AddListener(OnBack);
-        _controller1.OnLeftAnalogMove.AddListener(Move);
+       // _controller1.OnLeftAnalogMove.AddListener(Move);
     }
 
     private void OnSelect2()
@@ -55,14 +57,12 @@ public class ManuPlayerController : AbstractPlayerMovement
     }
 
 
-    bool iszero = true;
+/*    bool iszero = true;
     public void Move(Vector2 movement)
     {
-        if (movement.y < 0.2 && movement.y > -0.2)
+        if (movement.y < 0.1 && movement.y > -0.1)
         {
             iszero = true;
-
-
         }
         if (iszero) {
             if (movement.y > 0.9)
@@ -72,15 +72,18 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
             else
             {
-                if (movement.y < -0.9)
+                if (_currentOption < 2)
                 {
-                    _currentOption++;
-                    iszero = false;
+                    if (movement.y < -0.9)
+                    {
+                        _currentOption++;
+                        iszero = false;
+                    }
                 }
             }
             UpdateManuButtons();
         } 
-    }
+    }*/
 
     private void UpdateManuButtons()
     {
@@ -106,7 +109,7 @@ public class ManuPlayerController : AbstractPlayerMovement
             case 0:
                 SelectOnHomeScreen();
                 break;
-            case 1:
+/*            case 1:
                 SelectOnControllsScreen();
                 break;
             case 2:
@@ -118,29 +121,24 @@ public class ManuPlayerController : AbstractPlayerMovement
                     StartGame();
                 }
                 break;
+*/
         }
+
     }
 
     private void StartGame()
     {
-        throw new NotImplementedException();
+        SceneManager.LoadScene(1);
     }
 
-    private void SelectOnCreditsScreen()
-    {
-        _currentManu = 0;
-        UpdateManu();
-    }
 
-    private void SelectOnControllsScreen()
+    public void SelectOnHomeScreen()
     {
-        _currentManu = 0;
-        UpdateManu();
-    }
-
-    private void SelectOnHomeScreen()
-    {
-        if(_currentOption == 0)
+        Button button = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        if (button == null)
+            return;
+        button.OnPointerClick(new PointerEventData(EventSystem.current));
+/*        if(_currentOption == 0)
         {
             _currentManu = 3;
             UpdateManu();
@@ -154,30 +152,30 @@ public class ManuPlayerController : AbstractPlayerMovement
         {
             _currentManu = 2;
             UpdateManu();
-        }
+        }*/
+        //EventManagerCurrentButton
     }
 
     private void OnBack()
     {
 
             _currentManu = 0;
-            UpdateManu();
+            UpdateManu(0);
     }
 
-    private void UpdateManu()
+    public void UpdateManu(int index)
     {
         for(int i=0;i< Manus.Length;i++)
         {
-            if(_currentManu == i)
+            if(index == i)
             {
-                Manus[i].SetActive(true);
+                Manus[index].SetActive(true);
             }
             else
             {
                 Manus[i].SetActive(false);
             }
         }
-        _currentOption = 0;
-        UpdateManuButtons();
+        _currentManu = index;
     }
 }

@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //SceneManager.LoadScene(1 - SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Additive);
+        SceneManager.LoadScene(1 - SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
