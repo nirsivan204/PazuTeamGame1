@@ -18,9 +18,9 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     private Rigidbody2D _rb;
 
     private bool _isBeingCheerd = true;
-    private bool _isGrounded = false;
-    private bool _isDoubleJump = false;
     private bool _isCheering = false;
+
+    private float _jumpCount = 0;
 
     private float _cheerTime = 2f;
     public event Action OnCheerAction;
@@ -48,10 +48,9 @@ public class LegsPlayerMovment : AbstractPlayerMovement
         _controller1 = controller1;
         _controller2 = controller2;
         _controller1.OnLeftAnalogMove.AddListener(MoveLeftStick);
-        _controller2.OnXPress.AddListener(Jump);
+        _controller2.OnXPress.AddListener(CheckJump);
         //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller2.OnTrianglePress.AddListener(Cheer);
-        _controller1.OnTrianglePress.AddListener(Cheer); // OtherPlayer
     }
 
     public void MoveLeftStick(Vector2 movement)
@@ -67,16 +66,28 @@ public class LegsPlayerMovment : AbstractPlayerMovement
         //print("legsRight");
     }
 
+    private void CheckJump()
+    {
+        if (_jumpCount == 0 || (_jumpCount == 1 & _isBeingCheerd))
+        {
+            Jump();            
+        }
+    }
+
     private void Jump()
     {
         _movement.y = _jumpSpeed;
         _rb.velocity = _movement;
+        _jumpCount++;
     }
+
+
     private void Cheer()
     {
-        Debug.Log("Cheer!");
-        if (!_isGrounded)
+        if (_jumpCount != 0)
             return;
+
+        Debug.Log("Cheer!");
 
         _isCheering = true;
         OnCheerAction?.Invoke();
@@ -90,7 +101,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     {
         if (collision.gameObject.tag == "platform")
         {
-            _isGrounded = true;
+            _jumpCount = 0;
             Platform platform = collision.gameObject.GetComponent<Platform>();
             transform.parent = platform.gameObject.transform;
         }
@@ -99,7 +110,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     {
         if (collision.gameObject.tag == "platform")
         {
-            _isGrounded = false;
             transform.parent = null;
         }
     }
