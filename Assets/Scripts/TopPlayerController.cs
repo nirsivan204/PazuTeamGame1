@@ -141,6 +141,8 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     public void Stun(int stunAmount = 10)
     {
         isStunned = true;
+        x = 0;
+        y = 0;
         levelAnimator.SetAddAnimation("Stunned", true, 0, false);
         StunLevel = stunAmount;
         _leftStunButtonNeeded = true;

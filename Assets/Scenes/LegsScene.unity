@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3034483956198438203, guid: 94593c54595339c4f89b73a89b979442, type: 3}
+      propertyPath: _door
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3218470230912540757, guid: 94593c54595339c4f89b73a89b979442, type: 3}
       propertyPath: m_UsedByEffector
       value: 1
