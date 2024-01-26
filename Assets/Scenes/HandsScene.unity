@@ -669,6 +669,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hands Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4257347273246626066, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: XMax
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4257347273246626066, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: XMin
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4257347273246626066, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: YMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4257347273246626066, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: YMin
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
