@@ -76,7 +76,7 @@ public class ManuPlayerController : AbstractPlayerMovement
     {
         player2Show = true;
         print("nir");
-        LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 2);
+        LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 1);
 
     }
     private void showFirstPlayer()
