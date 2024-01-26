@@ -2204,8 +2204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelAnimator: {fileID: 1123384663}
   _regulatSpeed: 7
-  _rotationSpeed: 1
-  _dashSpeed: 30
+  _rotationSpeed: 10
+  _dashSpeed: 15
+  _doubleDashSpeed: 20
   _dashTime: 0.5
   isDashing: 0
   isDoubleDashing: 0
@@ -5485,4 +5486,3 @@ SceneRoots:
   - {fileID: 4968392415325652700}
   - {fileID: 1792158023}
   - {fileID: 36783303}
-  - {fileID: 169847161}

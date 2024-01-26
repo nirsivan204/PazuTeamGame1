@@ -22,6 +22,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     public float _regulatSpeed = 1;
     public float _rotationSpeed = 1;
     public float _dashSpeed = 3;
+    public float _doubleDashSpeed = 4;
     public float _dashTime = 1f;
     public bool isDashing;
     public bool isDoubleDashing;
@@ -101,7 +102,9 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         else if(!isDoubleDashing)
         {
             isDoubleDashing = true;
-            _speed = _dashSpeed * 1.5f;
+            _speed = _doubleDashSpeed;
+
+            levelAnimator.SetAddAnimation("Dash", false, 0, false);
 
             this.SetTimer(_dashTime, () =>
             {
@@ -240,7 +243,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         {
             float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
 
-            levelAnimator.transform.rotation = Quaternion.Euler(0, 0, targetAngle - 90);
+            levelAnimator.transform.rotation = Quaternion.Lerp(levelAnimator.transform.rotation, Quaternion.Euler(0, 0, targetAngle - 90), _rotationSpeed * Time.deltaTime);
 
             if (!isStunned && !isCheering && !isDashing && !isDoubleDashing && levelAnimator.GetAnimationName() != "Walk")
             {
