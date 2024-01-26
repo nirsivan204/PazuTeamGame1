@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class RumbleManager : MonoBehaviour
 {
 
-    public static Gamepad[] Gamepads;
+    public static Gamepad[] Gamepads = null;
     static Gamepad pad;
 
     public static void Init()
@@ -17,7 +17,7 @@ public class RumbleManager : MonoBehaviour
 
     public static void RumblePulse(bool isOn, int controllerIndex, float low, float high)
     {
-        if (Gamepads.Length == 0)
+        if (Gamepads == null || Gamepads.Length == 0)
         {
             Init();
         }

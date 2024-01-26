@@ -10,6 +10,8 @@ public class playerController : MonoBehaviour
     public UnityEvent squareEvent = new UnityEvent();
     public UnityEvent triangleEvent = new UnityEvent();
     public UnityEvent circleEvent = new UnityEvent();
+    public UnityEvent R1Event = new UnityEvent();
+    public UnityEvent L1Event = new UnityEvent();
     public UnityEvent mainManuEvent = new UnityEvent();
     public class MoveEvent : UnityEvent<Vector2>
     {
@@ -50,6 +52,15 @@ public class playerController : MonoBehaviour
     public void OnCircle()
     {
         circleEvent.Invoke();
+    }
+
+    public void OnR1()
+    {
+        R1Event.Invoke();
+    }
+    public void OnL1()
+    {
+        L1Event.Invoke();
     }
 
     private void leave()

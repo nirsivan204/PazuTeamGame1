@@ -14,6 +14,8 @@ public class HumanPlayer : MonoBehaviour
     public UnityEvent OnCirclePress;
     public UnityEvent OnSquarePress;
     public UnityEvent OnTrianglePress;
+    public UnityEvent OnR1Press;
+    public UnityEvent OnL1Press;
     public UnityEvent<Vector2>  OnRightAnalogMove;
     public UnityEvent<Vector2> OnLeftAnalogMove;
 
@@ -25,14 +27,14 @@ public class HumanPlayer : MonoBehaviour
 
     public void initController(InputMGR inputMGR)
     {
-        inputMGR.ConnectToAllPlayerControllers(playerIndex, OnMoveRight, OnMoveLeft, OnFire,OnCircle,OnTriangle,OnSquare, OnMoveRight);
+        inputMGR.ConnectToAllPlayerControllers(playerIndex, OnMoveRight, OnMoveLeft, OnFire,OnCircle,OnTriangle,OnSquare, OnMoveRight, OnR1, OnL1);
         //inputMGR.ConnectToGamePadPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire,OnCircle,OnTriangle,OnSquare, OnMoveRight);
     }
     public void initKeyboard(InputMGR inputMGR)
     {
         /*        inputMGR.ConnectToKeyboardPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire, null);
         */
-        inputMGR.ConnectToKeyboardPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire, OnCircle, OnTriangle, OnSquare);
+        inputMGR.ConnectToKeyboardPlayerController(playerIndex, OnMoveRight, OnMoveLeft, OnFire, OnCircle, OnTriangle, OnSquare, OnR1, OnL1);
     }
 
 
@@ -52,7 +54,7 @@ public class HumanPlayer : MonoBehaviour
     }
     public void OnFire()
     {
-        //print(name + "fire");
+        print(name + "fire");
         OnXPress.Invoke();
     }
 
@@ -69,6 +71,15 @@ public class HumanPlayer : MonoBehaviour
     {
         OnSquarePress.Invoke();
 
+    }
+
+    public void OnR1()
+    {
+        OnR1Press.Invoke();
+    }
+    public void OnL1()
+    {
+        OnL1Press.Invoke();
     }
 
     public void StartRumble()

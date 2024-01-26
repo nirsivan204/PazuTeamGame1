@@ -95,7 +95,6 @@ public class InputMGR : MonoBehaviour
                 }
                 //emptySpace = findNextEmptySpace();
             }
-            print(emptySpace + "" + PI);
             DontDestroyOnLoad(PI);
         }
 
@@ -132,7 +131,7 @@ public class InputMGR : MonoBehaviour
         }
         //playersInputs[keyboardPlayers + gamepadPlayers] = null;
     }
-    public void ConnectToKeyboardPlayerController(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction = null, UnityAction squareAction = null)
+    public void ConnectToKeyboardPlayerController(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction = null, UnityAction squareAction = null, UnityAction OnR1 = null, UnityAction OnL1 = null)
     {
         if(playersInputs[playerId] != null)
         {
@@ -169,12 +168,22 @@ public class InputMGR : MonoBehaviour
                 playersInputs[playerId].GetComponent<playerController>().squareEvent.RemoveAllListeners();
                 playersInputs[playerId].gameObject.GetComponent<playerController>().squareEvent.AddListener(squareAction);
             }
+            if (OnR1 != null)
+            {
+                playersInputs[playerId].GetComponent<playerController>().squareEvent.RemoveAllListeners();
+                playersInputs[playerId].gameObject.GetComponent<playerController>().R1Event.AddListener(OnR1);
+            }
+            if (OnL1 != null)
+            {
+                playersInputs[playerId].GetComponent<playerController>().squareEvent.RemoveAllListeners();
+                playersInputs[playerId].gameObject.GetComponent<playerController>().L1Event.AddListener(OnL1);
+            }
         }
     }
 
-    public void ConnectToGamePadPlayerController(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction = null, UnityAction squareAction = null, UnityAction<Vector2> DigitalMoveAction = null)
+    public void ConnectToGamePadPlayerController(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction = null, UnityAction squareAction = null, UnityAction<Vector2> DigitalMoveAction = null, UnityAction OnR1=null, UnityAction OnL1 = null)
     {
-        ConnectToKeyboardPlayerController(playerId + keyboardPlayers, moveRightAction, moveLeftAction, fireAction, circleAction,triangleAction,squareAction);
+        ConnectToKeyboardPlayerController(playerId + keyboardPlayers, moveRightAction, moveLeftAction, fireAction, circleAction,triangleAction,squareAction,OnR1,OnL1);
         if(DigitalMoveAction != null && playersInputs[playerId + keyboardPlayers] != null)
         {
             playersInputs[playerId + keyboardPlayers].gameObject.GetComponent<playerController>().digitalMoveEvent.AddListener(DigitalMoveAction);
@@ -190,19 +199,19 @@ public class InputMGR : MonoBehaviour
     }
 
 
-    public void ConnectToAllPlayerControllers(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction)
+    public void ConnectToAllPlayerControllers(int playerId, UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction, UnityAction OnR1, UnityAction OnL1)
     {
-        ConnectToKeyboardPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction,squareAction);
-        ConnectToGamePadPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction);
+        ConnectToKeyboardPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction,squareAction, OnR1, OnL1);
+        ConnectToGamePadPlayerController(playerId, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction, OnR1, OnL1);
     }
 
-    public void ConnectToAllPlayersControllers(UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction)
+/*    public void ConnectToAllPlayersControllers(UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction)
     {
         for(int i = 0; i< 2; i++)
         {
-            ConnectToAllPlayerControllers(i, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction);
+           // ConnectToAllPlayerControllers(i, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction, OnR1, OnL1);
         }
-    }
+    }*/
 
     public void ConnectToAllPlayersKeyBoards(UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction , UnityAction fireAction, UnityAction circleAction)
     {
