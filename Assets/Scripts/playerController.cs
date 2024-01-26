@@ -72,7 +72,6 @@ public class playerController : MonoBehaviour
 
     public void OnSquare()
     {
-        print("square");
         squareEvent.Invoke();
     }
     public void OnTriangle()
