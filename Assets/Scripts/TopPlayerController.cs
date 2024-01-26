@@ -243,7 +243,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         {
             float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
 
-            levelAnimator.transform.rotation = Quaternion.Lerp(levelAnimator.transform.rotation, Quaternion.Euler(0, 0, targetAngle - 90), _rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle - 90), _rotationSpeed * Time.deltaTime);
 
             if (!isStunned && !isCheering && !isDashing && !isDoubleDashing && levelAnimator.GetAnimationName() != "Walk")
             {
