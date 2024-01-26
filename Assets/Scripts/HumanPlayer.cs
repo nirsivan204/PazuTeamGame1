@@ -54,7 +54,7 @@ public class HumanPlayer : MonoBehaviour
     }
     public void OnFire()
     {
-        //print(name + "fire");
+        print(name + "fire");
         OnXPress.Invoke();
     }
 
