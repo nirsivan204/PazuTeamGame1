@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class InputMGR : MonoBehaviour
 {
-    public PlayerInput[] playersInputs = new PlayerInput[8];
+    public PlayerInput[] playersInputs = new PlayerInput[4];
     public int playersInGame = 0;
     public PlayerInputManager PIM_component;
     public int keyboardPlayers = 0;
@@ -25,15 +25,12 @@ public class InputMGR : MonoBehaviour
         {
             if (!isInit)
             {
-                print(name + "destroy");
                 if(allInputManagers[0] != this)
                 {
-                    print("not this");
                     playerMovement.Init(allInputManagers[0].players[0], allInputManagers[0].players[1]);
                 }
                 else
                 {
-                    print("this");
                     playerMovement.Init(allInputManagers[1].players[0], allInputManagers[1].players[1]);
                 }
                 DontDestroyOnLoad(playerMovement);
@@ -45,29 +42,26 @@ public class InputMGR : MonoBehaviour
         }
         else
         {
+
             PIM_component.enabled = true;
-            print(name + "dont destroy");
+            init();
             playerMovement.Init(players[0], players[1]);
             DontDestroyOnLoad(playerMovement);
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(players[0]);
             DontDestroyOnLoad(players[1]);
             gameObject.SetActive(true);
+
             SceneManager.LoadScene(1-SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Additive);
-            //init();
         }
     }
 
     public void init()
     {
         var p1 = PlayerInput.Instantiate(PIM_component.playerPrefab,
-            controlScheme: "Keyboard1", pairWithDevice: Keyboard.current);
+            controlScheme: "keyboard1", pairWithDevice: Keyboard.current);
         var p2 = PlayerInput.Instantiate(PIM_component.playerPrefab,
-            controlScheme: "Keyboard2", pairWithDevice: Keyboard.current);
-        var p3 = PlayerInput.Instantiate(PIM_component.playerPrefab,
-            controlScheme: "Keyboard3", pairWithDevice: Keyboard.current);
-        var p4 = PlayerInput.Instantiate(PIM_component.playerPrefab,
-            controlScheme: "Keyboard4", pairWithDevice: Keyboard.current);
+            controlScheme: "keyboard2", pairWithDevice: Keyboard.current);
         PIM_component.playerLeftEvent.AddListener(OnPlayerLeft);
 
         isInit = true;
@@ -85,16 +79,19 @@ public class InputMGR : MonoBehaviour
             {
                 emptySpace = keyboardPlayers;
                 keyboardPlayers++;
+                playersInputs[emptySpace] = PI;
+                players[emptySpace].initKeyboard(this);
             }
             else
             {
+                emptySpace = keyboardPlayers + gamepadPlayers;
+                playersInputs[emptySpace] = PI;
+                players[playersInGame].initController(this);
                 gamepadPlayers++;
                 playersInGame++;
-                emptySpace = findNextEmptySpace();
-
+                //emptySpace = findNextEmptySpace();
             }
-            playersInputs[emptySpace] = PI;
-            players[emptySpace].init(this);
+            print(emptySpace + "" + PI);
             DontDestroyOnLoad(PI);
         }
 
@@ -102,7 +99,7 @@ public class InputMGR : MonoBehaviour
 
     private int findNextEmptySpace()
     {
-        for(int i = 4; i < 8; i++)
+        for(int i = 2; i < 4; i++)
         {
             if(playersInputs[i] == null)
             {
@@ -135,6 +132,8 @@ public class InputMGR : MonoBehaviour
     {
         if(playersInputs[playerId] != null)
         {
+
+            //print(playersInputs[playerId]);
             if (fireAction != null)
             {
                 playersInputs[playerId].GetComponent<playerController>().fireEvent.RemoveAllListeners();
@@ -180,7 +179,7 @@ public class InputMGR : MonoBehaviour
 
     public void ConnectToAllPlayersGamePads(UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             ConnectToGamePadPlayerController(i, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction);
         }
@@ -195,7 +194,7 @@ public class InputMGR : MonoBehaviour
 
     public void ConnectToAllPlayersControllers(UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction, UnityAction fireAction, UnityAction circleAction, UnityAction triangleAction, UnityAction squareAction, UnityAction<Vector2> DigitalMoveAction)
     {
-        for(int i = 0; i< 4; i++)
+        for(int i = 0; i< 2; i++)
         {
             ConnectToAllPlayerControllers(i, moveRightAction, moveLeftAction, fireAction, circleAction, triangleAction, squareAction, DigitalMoveAction);
         }
@@ -203,7 +202,7 @@ public class InputMGR : MonoBehaviour
 
     public void ConnectToAllPlayersKeyBoards(UnityAction<Vector2> moveRightAction, UnityAction<Vector2> moveLeftAction , UnityAction fireAction, UnityAction circleAction)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             ConnectToKeyboardPlayerController(i, moveRightAction, moveLeftAction, fireAction, circleAction);
         }
@@ -211,7 +210,7 @@ public class InputMGR : MonoBehaviour
 
     public int getIndexOfPI(PlayerInput PI)
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 4; i++)
         {
             if (playersInputs[i] == PI)
             {
@@ -223,7 +222,7 @@ public class InputMGR : MonoBehaviour
 
     public int getMainPlayerGamePadID()
     {
-        for(int i = 4; i < 8; i++)
+        for(int i = 2; i < 4; i++)
         {
             if (playersInputs[i] != null)
             {

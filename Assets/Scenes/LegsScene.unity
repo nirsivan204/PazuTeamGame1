@@ -321,10 +321,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   playersInGame: 0
   PIM_component: {fileID: 1016313378}
   keyboardPlayers: 0
