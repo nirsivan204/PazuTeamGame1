@@ -57,8 +57,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     {
         //print("legsLeft");
         _movement.x = movement.x * _movmentSpeed;
-        _movement.y = movement.y * _movmentSpeed;
-
+        //_movement.y = movement.y * _movmentSpeed;
         _rb.velocity = _movement;
     }
     public void MoveRightStick(Vector2 movement)
@@ -99,19 +98,19 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     }    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "platform")
+        if (collision.gameObject.tag == "Platform")
         {
             Debug.Log("platform!");
             _jumpCount = 0;
-            Platform platform = collision.gameObject.GetComponent<Platform>();
-            transform.parent = platform.gameObject.transform;
+            //Platform platform = collision.gameObject.GetComponent<Platform>();
+            //transform.parent = platform.gameObject.transform;
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "platform")
+        if (collision.gameObject.tag == "Platform")
         {
-            transform.parent = null;
+            //transform.parent = null;
         }
     }
 }
