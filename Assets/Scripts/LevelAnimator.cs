@@ -7,9 +7,14 @@ using UnityEngine.TextCore.Text;
 
 public class LevelAnimator : MonoBehaviour
 {
-    private readonly SkeletonAnimation _skeletonAnimation;
+    private SkeletonAnimation _skeletonAnimation;
 
     public const string IDLE_ANIMATINO_NAME = "";
+
+    private void Awake()
+    {
+        _skeletonAnimation = GetComponent<SkeletonAnimation>();
+    }
 
     public TrackEntry SetAnimation(string animationName, bool loop = false, int trackIndex = 0)
     {
@@ -51,6 +56,11 @@ public class LevelAnimator : MonoBehaviour
         {
             return _skeletonAnimation.AnimationState.SetAnimation(trackIndex, animation, loop);
         }
+    }
+
+    private float GetAnimationLength(string animationName)
+    {
+        return _skeletonAnimation.Skeleton.Data.FindAnimation(animationName).Duration;
     }
 
 
