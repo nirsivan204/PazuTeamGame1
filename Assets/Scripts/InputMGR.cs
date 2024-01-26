@@ -89,6 +89,10 @@ public class InputMGR : MonoBehaviour
                 players[playersInGame].initController(this);
                 gamepadPlayers++;
                 playersInGame++;
+                if(playersInGame == 2)
+                {
+                    disableJoin();
+                }
                 //emptySpace = findNextEmptySpace();
             }
             print(emptySpace + "" + PI);
@@ -263,7 +267,7 @@ public class InputMGR : MonoBehaviour
         {
             if (playersInputs[i] != null)
             {
-               // playersInputs[i].GetComponent<PlayerController>().CanLeave = false;
+                playersInputs[i].GetComponent<playerController>().CanLeave = false;
 
             }
 
