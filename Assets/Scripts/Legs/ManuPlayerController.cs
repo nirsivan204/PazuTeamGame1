@@ -14,6 +14,9 @@ public class ManuPlayerController : AbstractPlayerMovement
     [SerializeField] private GameObject[] Manus;
     [SerializeField] Button[] mainManuButtons;
 
+    [SerializeField] private Image frame1;
+    [SerializeField] private Image frame2;
+
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
 
@@ -21,7 +24,8 @@ public class ManuPlayerController : AbstractPlayerMovement
     public event Action OnCheerEndAction;
     int _currentOption;
     int _currentManu;
-    bool player2Show = true;
+    bool player2Show = false;
+    bool player1Show = false;
 
 
 
@@ -40,7 +44,7 @@ public class ManuPlayerController : AbstractPlayerMovement
     {
         if(_currentManu == 3)
         {
-            if (player2Show)
+            if (player2Show && player1Show)
             {
                 StartGame();
             }
@@ -51,83 +55,41 @@ public class ManuPlayerController : AbstractPlayerMovement
         }
     }
 
-    private void showSecondPlayer()
-    {
-        player2Show = true;
-    }
-
-
-/*    bool iszero = true;
-    public void Move(Vector2 movement)
-    {
-        if (movement.y < 0.1 && movement.y > -0.1)
-        {
-            iszero = true;
-        }
-        if (iszero) {
-            if (movement.y > 0.9)
-            {
-                _currentOption--;
-                iszero = false;
-            }
-            else
-            {
-                if (_currentOption < 2)
-                {
-                    if (movement.y < -0.9)
-                    {
-                        _currentOption++;
-                        iszero = false;
-                    }
-                }
-            }
-            UpdateManuButtons();
-        } 
-    }*/
-
-    private void UpdateManuButtons()
-    {
-        //mainManuButtons[_currentOption].Select();
-/*        for (int i = 0; i < Manus.Length; i++)
-        {
-            if (_currentOption == i)
-            {
-                
-            }
-            else
-            {
-                mainManuButtons[i];
-            }
-        }
-        mainManuButtons[_currentOption]*/
-    }
+    
 
     private void OnSelect()
     {
-        switch (_currentManu)
+        if (_currentManu == 3)
         {
-            case 0:
-                SelectOnHomeScreen();
-                break;
-/*            case 1:
-                SelectOnControllsScreen();
-                break;
-            case 2:
-                SelectOnCreditsScreen();
-                break;
-            case 3:
-                if (player2Show)
-                {
-                    StartGame();
-                }
-                break;
-*/
+            if (player2Show && player1Show)
+            {
+                StartGame();
+            }
+            else
+            {
+                showFirstPlayer();
+                player1Show = true;
+            }
         }
+    }
+    private void showSecondPlayer()
+    {
+        player2Show = true;
+        print("nir");
+        LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 2);
 
     }
-
+    private void showFirstPlayer()
+    {
+        player1Show = true;
+        LeanTween.scale(frame1.gameObject,7*Vector3.one,2);
+    }
+    bool isGameStarted = false;
     private void StartGame()
     {
+        if (isGameStarted)
+            return;
+        isGameStarted = true;
         SceneManager.LoadScene(1);
     }
 
