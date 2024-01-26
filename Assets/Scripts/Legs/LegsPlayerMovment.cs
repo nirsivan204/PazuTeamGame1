@@ -101,6 +101,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     {
         if (collision.gameObject.tag == "platform")
         {
+            Debug.Log("platform!");
             _jumpCount = 0;
             Platform platform = collision.gameObject.GetComponent<Platform>();
             transform.parent = platform.gameObject.transform;
