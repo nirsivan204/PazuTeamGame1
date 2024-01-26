@@ -60,6 +60,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         _controller1.OnXPress.AddListener(Dash);
         _controller1.OnCirclePress.AddListener(RightStunButton);
         _controller1.OnSquarePress.AddListener(LeftStunButton);
+        _controller1.OnTrianglePress.AddListener(Cheer);
     }
 
     public void MoveLeftStick(Vector2 movement)
