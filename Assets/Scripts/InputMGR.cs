@@ -52,7 +52,6 @@ public class InputMGR : MonoBehaviour
             DontDestroyOnLoad(players[1]);
             gameObject.SetActive(true);
 
-            SceneManager.LoadScene(1-SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Additive);
         }
     }
 

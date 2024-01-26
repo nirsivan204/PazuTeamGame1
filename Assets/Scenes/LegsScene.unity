@@ -403,6 +403,50 @@ MonoBehaviour:
   - {fileID: 1997567064}
   - {fileID: 1788314376}
   playerMovement: {fileID: 1251725895}
+--- !u!1 &1035330666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035330668}
+  - component: {fileID: 1035330667}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1035330667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035330666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a5dd1e3113590418042a7366ba43ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1035330668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035330666}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.3473415, y: 1.4623795, z: -10.020555}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1251725895 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7278534455897748695, guid: 4cfcf687e4219a74cbde1170781f1598, type: 3}
@@ -524,6 +568,12 @@ MonoBehaviour:
   OnTrianglePress:
     m_PersistentCalls:
       m_Calls: []
+  OnR1Press:
+    m_PersistentCalls:
+      m_Calls: []
+  OnL1Press:
+    m_PersistentCalls:
+      m_Calls: []
   OnRightAnalogMove:
     m_PersistentCalls:
       m_Calls: []
@@ -606,6 +656,12 @@ MonoBehaviour:
   OnTrianglePress:
     m_PersistentCalls:
       m_Calls: []
+  OnR1Press:
+    m_PersistentCalls:
+      m_Calls: []
+  OnL1Press:
+    m_PersistentCalls:
+      m_Calls: []
   OnRightAnalogMove:
     m_PersistentCalls:
       m_Calls: []
@@ -653,3 +709,4 @@ SceneRoots:
   - {fileID: 1788314377}
   - {fileID: 1519983469}
   - {fileID: 824339258}
+  - {fileID: 1035330668}
