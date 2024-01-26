@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7952d7e307e3d4fb96be9e0e37540b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movmentSpeed: 50
+  _movmentSpeed: 10
   _jumpSpeed: 10
   rumbleManager: {fileID: 0}
 --- !u!50 &2177321412870596308

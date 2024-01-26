@@ -20,7 +20,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
 
-    private float _jumpCount = 0;
+    public float _jumpCount = 0;
+    private int _dirX;
 
     private float _cheerTime = 2f;
     public event Action OnCheerAction;
@@ -41,7 +42,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement
         }
     }
 
-
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
     {
         print("init legs");
@@ -55,11 +55,29 @@ public class LegsPlayerMovment : AbstractPlayerMovement
 
     public void MoveLeftStick(Vector2 movement)
     {
-        //print("legsLeft");
+        CheckDirection(movement);
+
+        if (_jumpCount > 0)
+            return;
+
         _movement.x = movement.x * _movmentSpeed;
-        //_movement.y = movement.y * _movmentSpeed;
+
+        _movement.y = _rb.velocity.y;
         _rb.velocity = _movement;
     }
+
+    private void CheckDirection(Vector2 movement)
+    {
+        if (movement.x < 0.1 && movement.x > -0.1)
+        {
+            _dirX = 0;
+        }
+        else
+        {
+            _dirX = movement.x > 0 ? 1 : -1;
+        }
+    }
+
     public void MoveRightStick(Vector2 movement)
     {
         //print("legsRight");
@@ -76,10 +94,10 @@ public class LegsPlayerMovment : AbstractPlayerMovement
     private void Jump()
     {
         _movement.y = _jumpSpeed;
+        _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
     }
-
 
     private void Cheer()
     {
