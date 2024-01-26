@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TopPlayerController : AbstractPlayerMovement
+public class TopPlayerController : AbstractPlayerMovement, IStunnable
 {
     public static TopPlayerController Instance { get; private set; }
     private HumanPlayer _controller1;
@@ -25,10 +25,16 @@ public class TopPlayerController : AbstractPlayerMovement
 
     public bool isCheering;
     public float _cheerTime = 2;
-    public bool _isBeingCheerd;
+
+    public int StunLevel = 0;
+    private bool isStunned;
+    private bool _leftStunButtonNeeded;
+    private bool _rightStunButtonNeeded;
 
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;
+
+    public bool _isBeingCheerd;
 
     private void Awake()
     {
@@ -60,7 +66,7 @@ public class TopPlayerController : AbstractPlayerMovement
     }
     public void Dash()
     {
-        if (isCheering)
+        if (isStunned || isCheering)
             return;
 
         if (!isDashing && !isDoubleDashing)
@@ -93,8 +99,7 @@ public class TopPlayerController : AbstractPlayerMovement
 
     public void Cheer()
     {
-        Debug.Log("Cheer!");
-        if (isDashing || isDoubleDashing)
+        if (isStunned || isDashing || isDoubleDashing)
             return;
 
         isCheering = true;
@@ -107,9 +112,62 @@ public class TopPlayerController : AbstractPlayerMovement
         });
     }
 
+    public void OnStun(int stunAmount)
+    {
+        Stun(stunAmount);
+    }
+
+    public void Stun(int stunAmount = 10)
+    {
+        isStunned = true;
+        StunLevel = stunAmount;
+        _leftStunButtonNeeded = true;
+        _rightStunButtonNeeded = false;
+    }
+
+    public void LeftStunButton()
+    {
+        if (_leftStunButtonNeeded)
+        {
+            StunLevel--;
+            if (StunLevel <= 0)
+            {
+                isStunned = false;
+                StunLevel = 0;
+                _leftStunButtonNeeded = false;
+                _rightStunButtonNeeded = false;
+            }
+            else
+            {
+                _leftStunButtonNeeded = false;
+                _rightStunButtonNeeded = true;
+            }
+        }
+    }
+
+    public void RightStunButton()
+    {
+        if (_rightStunButtonNeeded)
+        {
+            StunLevel--;
+            if (StunLevel <= 0)
+            {
+                isStunned = false;
+                StunLevel = 0;
+                _leftStunButtonNeeded = false;
+                _rightStunButtonNeeded = false;
+            }
+            else
+            {
+                _leftStunButtonNeeded = true;
+                _rightStunButtonNeeded = false;
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (!isDashing && !isDoubleDashing && !isCheering)
+        if (!isStunned && !isDashing && !isDoubleDashing && !isCheering)
         {
             x = 0;
             y = 0;
