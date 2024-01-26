@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 660966894}
   - component: {fileID: 660966895}
   m_Layer: 7
-  m_Name: GameObject (1)
+  m_Name: Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,6 +304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04e07cf5539ac24ea32716ad142e10b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _regulatSpeed: 1
+  _dashSpeed: 3
+  _dashTime: 1
+  isDashing: 0
 --- !u!50 &660966895
 Rigidbody2D:
   serializedVersion: 4
@@ -567,7 +571,19 @@ MonoBehaviour:
   playerIndex: 0
   OnXPress:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 660966894}
+        m_TargetAssemblyTypeName: TopPlayerController, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnCirclePress:
     m_PersistentCalls:
       m_Calls: []
