@@ -59,6 +59,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _controller1.OnL1Press.AddListener(StopRumble);
         _controller2.OnR1Press.AddListener(Rumble);
         _controller2.OnL1Press.AddListener(StopRumble);
+        //_controller1.OnLeftAnalogMove.AddListener(PlayWalkingAnimation);
 
         _controller2.OnCirclePress.AddListener(OnCirclePress);
         _controller2.OnSquarePress.AddListener(OnSquarePress);
@@ -116,7 +117,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         {
             _levelAnimator.SetAddAnimation("Walking_Loop_Full", true, 0, false);
         }
-        else if(_levelAnimator.GetAnimationName() != "Idle")
+        else if(!_isWalking && _levelAnimator.GetAnimationName() != "Idle")
         {
             _levelAnimator.PlayIdleAnimation();
         }
