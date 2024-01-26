@@ -31,14 +31,14 @@ public class playerController : MonoBehaviour
     {
         Vector2 movementVector = value.Get<Vector2>().normalized;
         moveLeftEvent.Invoke(movementVector);
-        print(name + " " + movementVector);
+       //print(name + " " + movementVector);
     }
 
     public void OnMoveRight(InputValue value)
     {
         Vector2 movementVector = value.Get<Vector2>().normalized;
         moveRightEvent.Invoke(movementVector);
-        print(name + " " + movementVector);
+        //print(name + " " + movementVector);
     }
 
 

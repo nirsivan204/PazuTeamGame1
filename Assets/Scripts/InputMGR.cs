@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputMGR : MonoBehaviour
 {
@@ -15,19 +16,45 @@ public class InputMGR : MonoBehaviour
     public int lastGamePadIDLeft = -1;
     public bool isInit = false;
     [SerializeField] HumanPlayer[] players;
+    [SerializeField] AbstractPlayerMovement playerMovement;
 
     public void Awake()
     {
-        if (FindObjectsOfType<PlayerInputManager>().Length > 1)
+        InputMGR[] allInputManagers = FindObjectsOfType<InputMGR>();
+        if (allInputManagers.Length > 1)
         {
             if (!isInit)
             {
+                print(name + "destroy");
+                if(allInputManagers[0] != this)
+                {
+                    print("not this");
+                    playerMovement.Init(allInputManagers[0].players[0], allInputManagers[0].players[1]);
+                }
+                else
+                {
+                    print("this");
+                    playerMovement.Init(allInputManagers[1].players[0], allInputManagers[1].players[1]);
+                }
+                DontDestroyOnLoad(playerMovement);
+                gameObject.SetActive(false);
+                Destroy(players[0].gameObject);
+                Destroy(players[1].gameObject);
                 Destroy(gameObject);
             }
         }
         else
         {
+            PIM_component.enabled = true;
+            print(name + "dont destroy");
+            playerMovement.Init(players[0], players[1]);
+            DontDestroyOnLoad(playerMovement);
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(players[0]);
+            DontDestroyOnLoad(players[1]);
+            gameObject.SetActive(true);
+            SceneManager.LoadScene(1-SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Additive);
+            //init();
         }
     }
 
@@ -42,6 +69,7 @@ public class InputMGR : MonoBehaviour
         var p4 = PlayerInput.Instantiate(PIM_component.playerPrefab,
             controlScheme: "Keyboard4", pairWithDevice: Keyboard.current);
         PIM_component.playerLeftEvent.AddListener(OnPlayerLeft);
+
         isInit = true;
     }
 
@@ -120,8 +148,8 @@ public class InputMGR : MonoBehaviour
             }
             if (moveLeftAction != null)
             {
-                playersInputs[playerId].GetComponent<playerController>().moveRightEvent.RemoveAllListeners();
-                playersInputs[playerId].gameObject.GetComponent<playerController>().moveRightEvent.AddListener(moveLeftAction);
+                playersInputs[playerId].GetComponent<playerController>().moveLeftEvent.RemoveAllListeners();
+                playersInputs[playerId].gameObject.GetComponent<playerController>().moveLeftEvent.AddListener(moveLeftAction);
             }
             if (circleAction != null)
             {

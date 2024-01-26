@@ -19,7 +19,6 @@ public class HumanPlayer : MonoBehaviour
     public float movementYRight;
     public float movementXLeft;
     public float movementyLeft;
-    
 
     public void init(InputMGR inputMGR)
     {
