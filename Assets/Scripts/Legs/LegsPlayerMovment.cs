@@ -10,14 +10,18 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 {
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
+
     public static LegsPlayerMovment Instance { get; private set; }
 
+    private LevelAnimator _levelAnimator;
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
 
     private Vector2 _movement;
     private Rigidbody2D _rb;
 
+    private bool _isWalking = false;
+    private bool _isIdle = true;
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
     public int StunLevel = 0;
@@ -45,6 +49,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
             TopPlayerController.Instance.OnCheerAction += () => _isBeingCheerd = true;
             TopPlayerController.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
         }
+
+        _levelAnimator = GetComponentInChildren<LevelAnimator>();
     }
 
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
@@ -53,17 +59,19 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _controller1 = controller1;
         _controller2 = controller2;
         _controller2.OnXPress.AddListener(CheckJump);
-        //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller2.OnTrianglePress.AddListener(Cheer);
         _controller1.OnR1Press.AddListener(Rumble);
         _controller1.OnL1Press.AddListener(StopRumble);
         _controller2.OnR1Press.AddListener(Rumble);
         _controller2.OnL1Press.AddListener(StopRumble);
 
-
-
         _controller2.OnCirclePress.AddListener(OnCirclePress);
         _controller2.OnSquarePress.AddListener(OnSquarePress);
+    }
+
+    private void Start()
+    {
+        _levelAnimator.PlayIdleAnimation();
     }
 
     private void Update()
@@ -73,12 +81,32 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
             CheckDirection(_controller1.movementXLeft);
 
             if (_controller1.movementXLeft > -0.25 && _controller1.movementXLeft < 0.25)
+            {
                 _controller1.movementXLeft = 0;
+                _isWalking = false;
+            }
+            else
+            {
+                _isWalking = true;
+            }
 
             if (_jumpCount > 0)
                 return;
 
+            PlayWalkingAnimation();
             _rb.velocity = new Vector2(_controller1.movementXLeft * _movmentSpeed, _rb.velocity.y);
+        }
+    }
+
+    private void PlayWalkingAnimation()
+    {
+        if (_isWalking)
+        {
+            _levelAnimator.SetAddAnimation("Walking_Loop_Full", true, 0, false);
+        }
+        else
+        {
+            _levelAnimator.PlayIdleAnimation();
         }
     }
 
@@ -92,11 +120,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         {
             _dirX = movement > 0 ? 1 : -1;
         }
-    }
-
-    public void MoveRightStick(Vector2 movement)
-    {
-        //print("legsRight");
     }
 
     public void Rumble()
@@ -123,6 +146,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
+        _levelAnimator.SetAddAnimation("Jump_Cycle_Up", false, 0, false);
     }
 
     private void Cheer()
