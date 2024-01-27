@@ -77,7 +77,7 @@ public class SquenceManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        print("init legs");
+
         _controller1.OnTrianglePress.AddListener(HandsTrianglePress);
         _controller1.OnCirclePress.AddListener(HandsCirclePress);
         _controller1.OnSquarePress.AddListener(HandsSquarePress);
@@ -93,28 +93,13 @@ public class SquenceManager : MonoBehaviour
         _controller2.OnLeftAnalogMove.AddListener(LegsAnalogMove);
         _controller2.OnL1Press.AddListener(LegsL1Press);
         _controller2.OnR1Press.AddListener(LegsR1Press);
-
-/*        SquenceManager[] sequenceList =  FindObjectsOfType<SquenceManager > ();
-        for (int i = 0; i < sequenceList.Length; i++)
-        {
-            if (sequenceList[i] == this)
-                continue;
-            if (sequenceList[i]._whatSequence == _whatSequence)
-            {
-                brother = sequenceList[i];
-                sequenceList[i]
-            }
-
-        }*/
     }
 
     //Start function just to test
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Hands")
-        { _isPlayer1Here = true;
-            Debug.Log("Hands here");
-        }
+        { _isPlayer1Here = true;        }
 
         if(_isPlayer1Here & _isPlayer2Here)
         {
@@ -139,7 +124,6 @@ public class SquenceManager : MonoBehaviour
             return;
         GameManager.Instance.StopPlayersInput();
         _isStartTest = true;
-
         PickSequence();
         _squenceIndex = 0;
         SpritePicker();
@@ -155,8 +139,6 @@ public class SquenceManager : MonoBehaviour
             spriteIndex -= 8;
             _spriteRenderer.enabled = false;
             ChangeSpriteOnTrigger?.Invoke(Sprites[spriteIndex]);
-
-
         }
         //Legs sprite
         else
@@ -164,7 +146,6 @@ public class SquenceManager : MonoBehaviour
             RemoveSpriteOnTrigger?.Invoke();
             _spriteRenderer.enabled = true;
             _spriteRenderer.sprite = Sprites[spriteIndex];
-
         }
     }
     private bool isHandsTurn() 
@@ -181,32 +162,31 @@ public class SquenceManager : MonoBehaviour
     private void CheckButton(int buttonNum)
     {
         if (_isStartTest) {
-            //_spriteRenderer.sprite = Sprites[_currentSequence[_squenceIndex]];
                 if (_currentSequence[_squenceIndex] == buttonNum)
                 {
                     _squenceIndex++;
-                    _squenceIndex %= _currentSequence.Length;
-                    Debug.Log("Succses, next number is - " + _currentSequence[_squenceIndex]);
-                    SpritePicker();
 
                 if (_squenceIndex == _currentSequence.Length)
                     {
                         Debug.Log("PassedTest");
+                    _isStartTest = false;
                         GameManager.Instance.onWIn(true);
 
-                        //PassTestEvent
+                }
+                else
+                {
+                    Debug.Log("Succses, next number is - " + _currentSequence[_squenceIndex]);
+                    SpritePicker();
+
                     }
                 }
                 else
                 {
-                    GameManager.Instance.onWIn(false);
-
-                    //_squenceIndex = 0;
+                    //GameManager.Instance.onWIn(false);
                     Debug.Log("Failed Test value is -" + buttonNum);
                 }
             }
     }
-
     //public function to be triggers from scene object
     public void PickSequence()
     {
@@ -281,7 +261,7 @@ public class SquenceManager : MonoBehaviour
             }
             _canFail = false;
 
-            LeanTween.delayedCall(0.5f, () => _canFail = true);
+            StartCoroutine(wait());
             if (isHandsTurn())
             {
                 if (move.y > 0.8)
@@ -297,6 +277,14 @@ public class SquenceManager : MonoBehaviour
             }
         }
     }
+
+    public IEnumerator wait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _canFail = true;
+
+    }
+
     private void HandsL1Press()
     {
         if (_isStartTest)

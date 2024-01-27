@@ -19,10 +19,8 @@ public class squenceTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Legs")
-        {
-            SquenceManager.instance.OnOtherEnter();
-            Debug.Log("Legs here");
-        }
+        {SquenceManager.instance.OnOtherEnter();}
+
     }
     private void SpriteChange(Sprite sprite)
     {
@@ -35,7 +33,6 @@ public class squenceTrigger : MonoBehaviour
     private void SpriteRemove()
     {
         print("remove");
-
         _spriteRenderer.enabled = false;
     }
 }
