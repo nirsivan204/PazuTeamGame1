@@ -54,8 +54,7 @@ public class StunOrb : MonoBehaviour
 
     private void FadeAway()
     {
-        Debug.Log("Bye Bye");
-        this.SetTimer(3, () =>
+        this.SetTimer(1, () =>
          {
              Destroy(transform.parent.gameObject);
          });
