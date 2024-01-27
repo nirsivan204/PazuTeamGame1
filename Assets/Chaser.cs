@@ -15,7 +15,7 @@ public class Chaser : MonoBehaviour
     bool isMoving = false;
     private float _speed;
 
-    public static UnityEvent<bool> OnHit;
+    //public static UnityEvent<bool> OnHit;
 
     public void Start()
     {
@@ -59,6 +59,6 @@ public class Chaser : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<AbstractPlayerMovement>())
-            OnHit?.Invoke(true);
+        { GameManager.Instance.onLose(); }
     }
 }
