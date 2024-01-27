@@ -8,12 +8,10 @@ bounds:199,87,88,69
 Bun_R
 bounds:199,16,88,69
 Foot_L
-bounds:96,3,126,50
-offsets:1,0,127,50
+bounds:2,2,127,50
 rotate:90
 Foot_R
-bounds:148,3,126,49
-offsets:1,0,127,49
+bounds:54,2,127,49
 rotate:90
 Leg_Bot_L
 bounds:2,209,76,166
@@ -22,9 +20,9 @@ Leg_Bot_R
 bounds:2,131,76,166
 rotate:90
 Leg_Top_L
-bounds:2,2,45,127
+bounds:105,2,45,127
 Leg_Top_R
-bounds:49,2,45,127
+bounds:152,2,45,127
 Pelvis
 bounds:170,158,127,88
 rotate:90

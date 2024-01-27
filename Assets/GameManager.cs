@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     [SerializeField] GameObject Win;
     [SerializeField] GameObject Lose;
 
@@ -45,6 +47,11 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
+        if (Instance != null)
+        {
+            Instance = this;
+        }
+
         GameManager[] allInputManagers = FindObjectsOfType<GameManager>();
         if (allInputManagers.Length > 1)
         {

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Platform
   - MovingObject
+  - SequenceTrigger
+  - Legs
+  - Hands
   layers:
   - Default
   - TransparentFX

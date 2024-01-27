@@ -19,7 +19,7 @@ public class Chaser : MonoBehaviour
 
     public void Start()
     {
-        StartMove(_speed_1);
+        StartMove(_startTime);
 
         this.SetTimer(_speedTime_1, () =>
         {
@@ -40,12 +40,12 @@ public class Chaser : MonoBehaviour
         }
     }
     // Start is called before the first frame update
-    void StartMove(float _startTime)
+    void StartMove(float startTime)
     {
-        this.SetTimer(_startTime, () =>
+        this.SetTimer(startTime, () =>
          {
              isMoving = true;
-             _rb.velocity = Vector2.up * _speed;
+             _rb.velocity = Vector2.up * _speed_1;
          });
     }
 
