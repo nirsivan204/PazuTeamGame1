@@ -118,13 +118,13 @@ public class ManuPlayerController : AbstractPlayerMovement
     }
 
 
-/*    public void SelectOnHomeScreen()
+    public void SelectOnHomeScreen()
     {
         Button button = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         if (button == null)
             return;
         button.OnPointerClick(new PointerEventData(EventSystem.current));
-*//*        if(_currentOption == 0)
+/*        if(_currentOption == 0)
         {
             _currentManu = 3;
             UpdateManu();
@@ -138,9 +138,9 @@ public class ManuPlayerController : AbstractPlayerMovement
         {
             _currentManu = 2;
             UpdateManu();
-        }*//*
+        }*/
         //EventManagerCurrentButton
-    }*/
+    }
 
     private void OnBack()
     {
@@ -148,12 +148,24 @@ public class ManuPlayerController : AbstractPlayerMovement
             _currentManu = 0;
             UpdateManu(0);
     }
+    bool isChangingManu = false;
 
     public void UpdateManu(int index)
     {
-        for(int i=0;i< Manus.Length;i++)
+        if (isChangingManu)
+            return;
+        isChangingManu = true;
+        StartCoroutine(UpdateManuCor(index));
+
+
+    }
+
+    public IEnumerator  UpdateManuCor(int index)
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        for (int i = 0; i < Manus.Length; i++)
         {
-            if(index == i)
+            if (index == i)
             {
                 Manus[index].SetActive(true);
             }
@@ -163,5 +175,7 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
         }
         _currentManu = index;
+        isChangingManu = false;
     }
+
 }
