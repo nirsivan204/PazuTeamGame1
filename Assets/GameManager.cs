@@ -69,6 +69,11 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        else
+        {
+            Destroy(Instance);
+            return;
+        }
 
         GameManager[] allInputManagers = FindObjectsOfType<GameManager>();
         if (allInputManagers.Length > 1)
