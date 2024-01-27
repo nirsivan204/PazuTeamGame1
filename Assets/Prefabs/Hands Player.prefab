@@ -195,12 +195,14 @@ MonoBehaviour:
   isDashing: 0
   isDoubleDashing: 0
   isCheering: 0
-  _cheerTime: 3
+  _cheerTime: 1
   StunLevel: 0
   GapReactionTime: 0.5
   _isBeingCheerd: 0
   AudioSource: {fileID: 1950195569288574902}
-  DashSound: {fileID: 8300000, guid: 75c62ff2a18e2544993884c809c61013, type: 3}
+  DashSounds:
+  - {fileID: 8300000, guid: 8a7a4280343f44f4a8c7e9c6dcf61383, type: 3}
+  - {fileID: 8300000, guid: 53faafc2373c56f4098f339147c405b9, type: 3}
 --- !u!58 &8516659071821002068
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -275,7 +277,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

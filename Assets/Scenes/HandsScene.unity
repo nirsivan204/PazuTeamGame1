@@ -971,6 +971,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019063487}
   m_CullTransparentMesh: 1
+--- !u!1001 &1205182379
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 166.96045
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 40.21881
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.40984344
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639126049756393343, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909107535340989279, guid: 6718485564271c84f920b4fae302ab05, type: 3}
+      propertyPath: m_Name
+      value: Music
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6718485564271c84f920b4fae302ab05, type: 3}
 --- !u!1 &1242594945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1694,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1950195569288574902, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1959424662393523060, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1694,22 +1755,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5359112560194803870}
     - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
-      propertyPath: _cheerTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
-      propertyPath: DashSounds.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
-      propertyPath: DashSounds.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 75c62ff2a18e2544993884c809c61013, type: 3}
-    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
-      propertyPath: DashSounds.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 77f6dade5ea2c2947bb3d09309616065, type: 3}
-    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
       propertyPath: DashSounds.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: ae446cfebc1f69e428b15f7b09efd877, type: 3}
@@ -1740,3 +1785,4 @@ SceneRoots:
   - {fileID: 882329607}
   - {fileID: 1004498088}
   - {fileID: 1954585353}
+  - {fileID: 1205182379}
