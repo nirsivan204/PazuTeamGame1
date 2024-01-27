@@ -142,7 +142,7 @@ public class ManuPlayerController : AbstractPlayerMovement
     {
         int i = 0;
         WaitForSeconds wait = new WaitForSeconds(0.02f);
-        while(i < 650)
+        while(i < 1650)
         {
             _credits.rectTransform.position += Vector3.up * 5f;
             i++;
