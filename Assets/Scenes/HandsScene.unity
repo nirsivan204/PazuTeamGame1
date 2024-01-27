@@ -623,6 +623,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4438278805472231480, guid: 4869133a33f7b1441a2bc563406c266f, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438278805472231480, guid: 4869133a33f7b1441a2bc563406c266f, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438278805472231480, guid: 4869133a33f7b1441a2bc563406c266f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5632564936731059497, guid: 4869133a33f7b1441a2bc563406c266f, type: 3}
       propertyPath: m_Name
       value: Chaser
