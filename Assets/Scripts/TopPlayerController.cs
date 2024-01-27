@@ -46,6 +46,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public AudioSource AudioSource;
     public AudioClip[] DashSounds;
+    public AudioClip[] ClapSounds;
 
     private void Awake()
     {
@@ -132,6 +133,22 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         x = 0;
         y = 0;
         levelAnimator.SetAddAnimation("Cheer", false, 0, false);
+
+        int rand = Random.Range(0, DashSounds.Length);
+        AudioSource.PlayOneShot(ClapSounds[rand]);
+        this.SetTimer(.4f, () =>
+         {
+             rand = Random.Range(0, DashSounds.Length);
+             AudioSource.PlayOneShot(ClapSounds[rand]);
+         });
+
+        this.SetTimer(.8f, () =>
+        {
+            rand = Random.Range(0, DashSounds.Length);
+            AudioSource.PlayOneShot(ClapSounds[rand]);
+        });
+
+
         OnCheerAction?.Invoke();
         this.SetTimer(_cheerTime, () =>
         {

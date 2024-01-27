@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 1950195569288574902}
   m_Layer: 0
   m_Name: Hands Player
-  m_TagString: Untagged
+  m_TagString: Hands
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,6 +203,11 @@ MonoBehaviour:
   DashSounds:
   - {fileID: 8300000, guid: 8a7a4280343f44f4a8c7e9c6dcf61383, type: 3}
   - {fileID: 8300000, guid: 53faafc2373c56f4098f339147c405b9, type: 3}
+  ClapSounds:
+  - {fileID: 8300000, guid: d650149659d1c0548b76386ee766cda3, type: 3}
+  - {fileID: 8300000, guid: 8b8d4b25e8443514e9bc9fe6161f3c63, type: 3}
+  - {fileID: 8300000, guid: d8fdfeb1cd45fc34096db7d5ae24c702, type: 3}
+  - {fileID: 8300000, guid: 3e9a5ef02d1d6464f879c691af8bb86a, type: 3}
 --- !u!58 &8516659071821002068
 CircleCollider2D:
   m_ObjectHideFlags: 0
