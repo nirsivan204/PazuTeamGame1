@@ -2920,7 +2920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8719564773311136444
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2989,8 +2989,9 @@ GameObject:
   - component: {fileID: 3091757562053024603}
   - component: {fileID: 6711100634009574568}
   - component: {fileID: 6161243900347727303}
+  - component: {fileID: 5533010871756597897}
   m_Layer: 0
-  m_Name: Door Switch 3 - Door 3 Arms
+  m_Name: Door Switch 4 - Door 4 Leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3075,7 +3076,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516c8995a2deaf1468ce78e712944ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: 3
+  _door: 9
+--- !u!58 &5533010871756597897
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2902738578391855798}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &2943772767697772110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3785,6 +3821,7 @@ GameObject:
   - component: {fileID: 8369224861219605173}
   - component: {fileID: 5704153450590374172}
   - component: {fileID: 4149398837240847527}
+  - component: {fileID: 5695445881851617383}
   m_Layer: 0
   m_Name: Door Switch 2 - Door 2 Legs
   m_TagString: Untagged
@@ -3872,6 +3909,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _door: 8
+--- !u!58 &5695445881851617383
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703596858050626501}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &3705612004983964696
 GameObject:
   m_ObjectHideFlags: 0
@@ -7849,12 +7921,12 @@ GameObject:
   - component: {fileID: 2740868227818361086}
   - component: {fileID: 2511230023563566962}
   m_Layer: 0
-  m_Name: Door Switch 2 - Door 3 Legs
+  m_Name: Door Switch 3 - Door 3 Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6055690319484740659
 Transform:
   m_ObjectHideFlags: 0
