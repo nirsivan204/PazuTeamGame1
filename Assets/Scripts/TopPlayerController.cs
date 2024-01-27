@@ -37,7 +37,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     private bool _rightStunButtonNeeded;
 
     private bool _isAboveGap;
-    public float GapReactionTime = .5f;
+    public float GapReactionTime = .1f;
 
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;

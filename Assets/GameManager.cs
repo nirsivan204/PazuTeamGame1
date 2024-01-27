@@ -54,10 +54,12 @@ public class GameManager : MonoBehaviour
     public void onLose()
     {
         Lose.SetActive(true);
+        StopPlayersInput();
     }
 
     public void OnReturnToMainManu()
     {
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         SceneManager.LoadScene(2);
     }
 
@@ -66,6 +68,11 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+        }
+        else
+        {
+            Destroy(Instance);
+            return;
         }
 
         GameManager[] allInputManagers = FindObjectsOfType<GameManager>();

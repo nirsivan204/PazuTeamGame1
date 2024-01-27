@@ -40,7 +40,7 @@ public class InputMGR : MonoBehaviour
                 {
                     playerMovement.Init(allInputManagers[1].players[0], allInputManagers[1].players[1]);
                 }
-                DontDestroyOnLoad(playerMovement);
+                //DontDestroyOnLoad(playerMovement);
                 gameObject.SetActive(false);
                 Destroy(players[0].gameObject);
                 Destroy(players[1].gameObject);

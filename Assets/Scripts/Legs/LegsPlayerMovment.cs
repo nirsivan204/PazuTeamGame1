@@ -9,6 +9,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 {
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _clips;
 
     public static LegsPlayerMovment Instance { get; private set; }
 
@@ -24,6 +26,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private bool _isStunned = false;
     private bool _isObjectBeingPulled = false;
     private bool _isJumping = false;
+    private bool _isDancing = false;
 
     public int StunLevel = 0;
     public float _jumpCount = 0;
@@ -32,11 +35,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private float _cheerTime = 2f;
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;
-    bool isStop;
-    public void stopMovment()
-    {
-        isStop = true;
-    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -71,9 +70,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void Update()
     {
-        if (isStop)
-            return;
-
         if (_isStunned)
             return;
 
@@ -101,10 +97,10 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void LateUpdate()
     {
-        if (_isStunned || isStop)
+        if (_isStunned)
             return;
 
-        if (_rb.velocity.y > 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Up")
+        if (_rb.velocity.y > 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Up" && !_isJumping)
         {
             _isJumping = true;
             _levelAnimator.SetAddAnimation("Jump_Cycle_Up", false, 0, false);
@@ -123,7 +119,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void PlayWalkingAnimation()
     {
-        if (_isJumping || _isStunned || _isCheering || isStop)
+        if (_isJumping || _isStunned || _isCheering || _isDancing)
             return;
 
         if (_isWalking && _levelAnimator.GetAnimationName()!= "Walking_Loop_Full")
@@ -170,7 +166,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void CheckJump()
     {
-        if (_isCheering || _isStunned || isStop)
+        if (_isCheering || _isStunned)
             return;
 
         if (_jumpCount == 0 || (_jumpCount == 1 && _isBeingCheerd))
@@ -184,16 +180,19 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _movement.y = _jumpSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
+        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(6, 9)], 0.3f);
+
     }
 
     private void Cheer()
     {
-        if (_jumpCount != 0 || isStop)
+        if (_jumpCount != 0)
             return;
 
         _isCheering = true;
         OnCheerAction?.Invoke();
         _levelAnimator.SetAddAnimation("Cheer", true, 0, false);
+        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(2, 6)]);
 
         this.SetTimer(_cheerTime, () =>
         {
@@ -231,8 +230,15 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnCirclePress()
     {
-        if (!_isStunned || isStop)
+        if (!_isStunned)
+        {
+            _isDancing = true;
+            float time = _levelAnimator.GetAnimationLength("Dance");
+            _levelAnimator.SetAddAnimation("Dance", false, 0, false);
+            _audioSource.PlayOneShot(_clips[1]);
+            this.SetTimer(time, () => { _isDancing = false; });
             return;
+        }
 
         if (StunLevel % 2 == 0)
         {
@@ -247,8 +253,15 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnSquarePress()
     {
-        if (!_isStunned || isStop)
+        if (!_isStunned)
+        {
+            _isDancing = true;
+            float time = _levelAnimator.GetAnimationLength("Dance");
+            _levelAnimator.SetAddAnimation("Dance", false, 0, false);
+            _audioSource.PlayOneShot(_clips[1]);
+            this.SetTimer(time, () => { _isDancing = false; });
             return;
+        }
 
         if (StunLevel % 2 == 1)
         {
@@ -265,5 +278,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     {
         _isStunned = true;
         _levelAnimator.SetAddAnimation("Stun", true, 0, false);
+        _audioSource.PlayOneShot(_clips[0]);
     }
 }

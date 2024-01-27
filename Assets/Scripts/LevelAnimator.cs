@@ -34,7 +34,8 @@ public class LevelAnimator : MonoBehaviour
             Debug.LogError("animationName is null or empty!");
             return null;
         }
-
+        if (_skeletonAnimation == null)
+            _skeletonAnimation = GetComponent<SkeletonAnimation>();
         Spine.Animation animation = _skeletonAnimation.Skeleton.Data.FindAnimation(animationName);
 
         if (animation == null)
@@ -58,7 +59,7 @@ public class LevelAnimator : MonoBehaviour
         return _skeletonAnimation.AnimationName;
     }
 
-    private float GetAnimationLength(string animationName)
+    public float GetAnimationLength(string animationName)
     {
         return _skeletonAnimation.Skeleton.Data.FindAnimation(animationName).Duration;
     }
