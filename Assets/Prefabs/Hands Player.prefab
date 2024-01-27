@@ -197,7 +197,7 @@ MonoBehaviour:
   isCheering: 0
   _cheerTime: 1
   StunLevel: 0
-  GapReactionTime: 0.5
+  GapReactionTime: 0.1
   _isBeingCheerd: 0
   AudioSource: {fileID: 1950195569288574902}
   DashSounds:

@@ -54,10 +54,12 @@ public class GameManager : MonoBehaviour
     public void onLose()
     {
         Lose.SetActive(true);
+        StopPlayersInput();
     }
 
     public void OnReturnToMainManu()
     {
+        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         SceneManager.LoadScene(2);
     }
 
