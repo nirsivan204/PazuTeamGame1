@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class SquenceManager : MonoBehaviour
@@ -11,13 +13,32 @@ public class SquenceManager : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite[] Sprites;
     
-    private int _squenceIndex;
-    private int _buttonValue;
+
+    [SerializeField] private int _whatSequence;
+
+    public static SquenceManager instance;
+
+    public void OnOtherEnter()
+    {
+        _isPlayer2Here = true;
+        if (_isPlayer1Here)
+        {
+            StartTest();
+        }
+    }
+    public UnityEvent<Sprite> ChangeSpriteOnTrigger;
+    public UnityEvent RemoveSpriteOnTrigger;
+
+    private int _squenceIndex = 0;
+    //private int _buttonValue;
+
+    public bool _isPlayer1Here = false;
+    public static bool _isPlayer2Here = false;
 
     private bool _canFail = true;
+    private bool _isStartTest = false;
 
-
-    private int[] _sequence1 = { 5, 4 };    //= {8, 4, 5, 11 };
+    private int[] _sequence1 = {8, 4, 5, 11 };
 //Sequence 1 - LegsTriangle, Hands Up, Hands Down, Legs X
 
     private int[] _sequence2 = { 0, 5, 15, 14, 6, 6, 12, 0 };
@@ -28,7 +49,6 @@ public class SquenceManager : MonoBehaviour
 
     private int[] _sequence4 = { 5, 13, 2, 9, 4, 12, 16, 17, 1, 10 };
     //Final Sequence- Fusion dance- Down (5 + 13), Hands Square & Legs Circle (2+ 9), Up (4 + 12), DONT PRESS (16+17), Hands Circle and Legs Square (1 + 10)
-
     //Squence Values:
     //               HandsTriangle   = 0
     //               HandsCircle     = 1
@@ -56,6 +76,7 @@ public class SquenceManager : MonoBehaviour
     //public override void Init(HumanPlayer controller1, HumanPlayer controller2)
     private void Awake()
     {
+        instance = this;
         print("init legs");
         _controller1.OnTrianglePress.AddListener(HandsTrianglePress);
         _controller1.OnCirclePress.AddListener(HandsCirclePress);
@@ -65,7 +86,6 @@ public class SquenceManager : MonoBehaviour
         _controller1.OnL1Press.AddListener(HandsR1Press);
         _controller1.OnR1Press.AddListener(HandsL1Press);
 
-
         _controller2.OnTrianglePress.AddListener(LegsTrianglePress);
         _controller2.OnCirclePress.AddListener(LegsCirclePress);
         _controller2.OnSquarePress.AddListener(LegsSquarePress);
@@ -74,19 +94,81 @@ public class SquenceManager : MonoBehaviour
         _controller2.OnL1Press.AddListener(LegsL1Press);
         _controller2.OnR1Press.AddListener(LegsR1Press);
 
+/*        SquenceManager[] sequenceList =  FindObjectsOfType<SquenceManager > ();
+        for (int i = 0; i < sequenceList.Length; i++)
+        {
+            if (sequenceList[i] == this)
+                continue;
+            if (sequenceList[i]._whatSequence == _whatSequence)
+            {
+                brother = sequenceList[i];
+                sequenceList[i]
+            }
+
+        }*/
     }
 
     //Start function just to test
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Started test");
-        PickSequence(1);
-    }
+        if (other.gameObject.tag == "Hands")
+        { _isPlayer1Here = true;
+            Debug.Log("Hands here");
+        }
 
+        if(_isPlayer1Here & _isPlayer2Here)
+        {
+            StartTest();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Hands")
+        {
+            _isPlayer1Here = false;
+        }
+        if (other.gameObject.tag == "Legs")
+        {
+            _isPlayer2Here = false;
+        }
+    }
+    private void StartTest()
+    {
+        Debug.Log("Start Test");
+        if (_isStartTest)
+            return;
+        _isStartTest = true;
+
+        PickSequence();
+        _squenceIndex = 0;
+        SpritePicker();
+        isHandsTurn();
+
+
+    }
+    private void SpritePicker()
+    { int spriteIndex = _currentSequence[_squenceIndex];
+        //hands sprite
+        if (spriteIndex > 7)
+        {
+            spriteIndex -= 7;
+            RemoveSpriteOnTrigger?.Invoke();
+            _spriteRenderer.enabled = true;
+            _spriteRenderer.sprite = Sprites[spriteIndex];
+
+        }
+        //Legs sprite
+        else
+        {
+            _spriteRenderer.enabled = false;
+            ChangeSpriteOnTrigger?.Invoke(Sprites[spriteIndex]);
+
+        }
+    }
     private bool isHandsTurn() 
     {
         if (_currentSequence[_squenceIndex] <= 7)
-        {
+        {   
             return true;
         }
         else
@@ -96,53 +178,32 @@ public class SquenceManager : MonoBehaviour
     }
     private void CheckButton(int buttonNum)
     {
-        if (_currentSequence != _sequence4)
-        {
-            _spriteRenderer.sprite = Sprites[_currentSequence[_squenceIndex]];
-            if (_currentSequence[_squenceIndex] == buttonNum)
-            {
-                _squenceIndex++;
-                _squenceIndex %= _currentSequence.Length;
-                Debug.Log("Succses, next number is - " + _currentSequence[_squenceIndex]);
-                if (_squenceIndex == _currentSequence.Length)
+        if (_isStartTest) {
+            SpritePicker();
+            //_spriteRenderer.sprite = Sprites[_currentSequence[_squenceIndex]];
+                if (_currentSequence[_squenceIndex] == buttonNum)
                 {
-                    Debug.Log("PassedTest");
-                    //PassTestEvent
+                    _squenceIndex++;
+                    _squenceIndex %= _currentSequence.Length;
+                    Debug.Log("Succses, next number is - " + _currentSequence[_squenceIndex]);
+                    if (_squenceIndex == _currentSequence.Length)
+                    {
+                        Debug.Log("PassedTest");
+                        //PassTestEvent
+                    }
+                }
+                else
+                {
+                    _squenceIndex = 0;
+                    Debug.Log("Failed Test value is -" + buttonNum);
                 }
             }
-            else
-            {
-                _squenceIndex = 0;
-                Debug.Log("Failed Test value is -" + buttonNum);
-            }
-     //Only for final Test - Maybe ovride Check isHandsTurn so its both turn and make buttonNum w values HandsbuttonNum And LegsbuttonNum ?? 
-        }
-        else
-        {
-            float LegsbuttonNum = 0;
-            float HandsbuttonNum = 0;
-            if (_currentSequence[_squenceIndex] == HandsbuttonNum & _currentSequence[_squenceIndex + 1] == LegsbuttonNum)
-            {
-                _squenceIndex += 2 ;
-                _squenceIndex %= _currentSequence.Length;
-                if (_squenceIndex == _currentSequence.Length)
-                {
-                    Debug.Log("PassedFinalTest");
-                    //FinishGameEvent
-                }
-            }
-            else
-            {
-                _squenceIndex = 0;
-                Debug.Log("Failed Test");
-            }
-        }
     }
 
     //public function to be triggers from scene object
-    public void PickSequence(int sequenceNum)
+    public void PickSequence()
     {
-        switch (sequenceNum)
+        switch (_whatSequence)
         {
             case 1:
                 _currentSequence = _sequence1;
@@ -163,144 +224,170 @@ public class SquenceManager : MonoBehaviour
 
     private void HandsTrianglePress()
     {
-        Debug.Log("HandsTriangle");
-        if (isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(0);
+            if (isHandsTurn())
+            {
+                CheckButton(0);
+            }
         }
     }
     private void HandsCirclePress()
     {
-        Debug.Log("HandsCircle");
-        if (isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(1);
+            if (isHandsTurn())
+            {
+                CheckButton(1);
+            }
         }
     }
     private void HandsSquarePress()
     {
-        Debug.Log("HandsSquare");
-        if (isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(2);
+            if (isHandsTurn())
+            {
+                CheckButton(2);
+            }
         }
     }
     private void HandsXPress()
     {
-        Debug.Log("HandsX");
-        if (isHandsTurn())
+        print("nir");
+        if (_isStartTest)
         {
-            CheckButton(3);
+            if (isHandsTurn())
+            {
+                CheckButton(3);
+            }
         }
     }
 
     private void HandsAnalogMove(Vector2 move)
-    {   
-        if (!_canFail)
+    {
+        if (_isStartTest)
         {
-            return;
-        }
-        Debug.Log("HandsAnalog" + move);
-        _canFail = false;
-
-        LeanTween.delayedCall(0.5f,() => _canFail = true);
-        if (isHandsTurn())
-        {
-            if (move.y > 0.8)
+            if (!_canFail)
             {
-                CheckButton(4);
-
+                return;
             }
-            else
+            _canFail = false;
+
+            LeanTween.delayedCall(0.5f, () => _canFail = true);
+            if (isHandsTurn())
             {
-                if (move.y < -0.8)
-                    CheckButton(5);
+                if (move.y > 0.8)
+                {
+                    CheckButton(4);
+
+                }
+                else
+                {
+                    if (move.y < -0.8)
+                        CheckButton(5);
+                }
             }
         }
     }
     private void HandsL1Press()
     {
-        Debug.Log("HandsL1");
-
-        if (isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(6);
+            if (isHandsTurn())
+            {
+                CheckButton(6);
+            }
         }
     }
     private void HandsR1Press()
     {
-        Debug.Log("HandsR1");
-
-        if (isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(7);
+            if (isHandsTurn())
+            {
+                CheckButton(7);
+            }
         }
     }
+
     //Player 2 Button Press
     private void LegsTrianglePress()
     {
-        Debug.Log("LegsTriangle");
-
-        if (!isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(8);
+            if (!isHandsTurn())
+            {
+                CheckButton(8);
+            }
         }
     }
     private void LegsCirclePress()
     {
-        Debug.Log("LegsCircle");
-
-        if (!isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(9);
+            if (!isHandsTurn())
+            {
+                CheckButton(9);
+            }
         }
     }
     private void LegsSquarePress()
     {
-        Debug.Log("LegsSquare");
-        if (!isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(10);
+            if (!isHandsTurn())
+            {
+                CheckButton(10);
+            }
         }
     }
     private void LegsXPress()
     {
-        Debug.Log("LegsX");
-        if (!isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(11);
+            if (!isHandsTurn())
+            {
+                CheckButton(11);
+            }
         }
     }
     private void LegsAnalogMove(Vector2 move)
     {
-        Debug.Log("LegssAnalog" + move);
-        if (!isHandsTurn())
+        if (_isStartTest)
         {
-            if (move.y > 0.8)
+            if (!isHandsTurn())
             {
-                CheckButton(12);
-            }
-            else
-            {
-                if (move.y < -0.8)
-                    CheckButton(13);
+                if (move.y > 0.8)
+                {
+                    CheckButton(12);
+                }
+                else
+                {
+                    if (move.y < -0.8)
+                        CheckButton(13);
+                }
             }
         }
     }
     private void LegsL1Press()
         {
-            Debug.Log("LegsL1");
+        if (_isStartTest)
+        {
             if (!isHandsTurn())
             {
-            CheckButton(14);
+                CheckButton(14);
             }
+        }
     }
     private void LegsR1Press()
         {
-            Debug.Log("LegsR1");
-            if (!isHandsTurn())
+        if (_isStartTest)
         {
-            CheckButton(15);
+            if (!isHandsTurn())
+            {
+                CheckButton(15);
+            }
         }
     }
 }
