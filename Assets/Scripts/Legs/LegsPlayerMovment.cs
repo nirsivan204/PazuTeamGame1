@@ -15,8 +15,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private LevelAnimator _levelAnimator;
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
-    private GameObject _movingObject;
-
     private Vector2 _movement;
     private Rigidbody2D _rb;
 
@@ -25,6 +23,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private bool _isCheering = false;
     private bool _isStunned = false;
     private bool _isObjectBeingPulled = false;
+    private bool _isJumping = false;
 
     public int StunLevel = 0;
     public float _jumpCount = 0;
@@ -44,15 +43,12 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _levelAnimator = GetComponentInChildren<LevelAnimator>();
     }
 
-
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
     {
         _controller1 = controller1;
         _controller2 = controller2;
         _controller2.OnXPress.AddListener(CheckJump);
         _controller2.OnTrianglePress.AddListener(Cheer);
-        _controller1.OnL1Press.AddListener(Push);
-        _controller2.OnR1Press.AddListener(Pull);
 
         _controller2.OnCirclePress.AddListener(OnCirclePress);
         _controller2.OnSquarePress.AddListener(OnSquarePress);
@@ -71,7 +67,13 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void Update()
     {
-        if(_controller1 != null && !_isStunned && !_isCheering)
+        if (_isStunned)
+            return;
+
+        if (_isCheering)
+            return;
+
+        if (_controller1 != null)
         {
             CheckDirection(_controller1.movementXLeft);
 
@@ -94,6 +96,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     {
         if (_rb.velocity.y > 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Up")
         {
+            _isJumping = true;
             _levelAnimator.SetAddAnimation("Jump_Cycle_Up", false, 0, false);
         }
         else if (_rb.velocity.y < 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Down")
@@ -103,19 +106,23 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         }
         else
         {
+            _isJumping = false;
             _rb.gravityScale = 1;
         }
     }
 
     private void PlayWalkingAnimation()
     {
+        if (_isJumping || _isStunned || _isCheering)
+            return;
+
         if (_isWalking && _levelAnimator.GetAnimationName()!= "Walking_Loop_Full")
         {
             _levelAnimator.SetAddAnimation("Walking_Loop_Full", true, 0, false);
         }
         else if(!_isWalking && _levelAnimator.GetAnimationName() != "Idle")
         {
-            _levelAnimator.PlayIdleAnimation();
+            _levelAnimator.SetAddAnimation("Walking_Loop_Full", true, 0, false);
         }
     }
 
@@ -158,7 +165,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
         if (_jumpCount == 0 || (_jumpCount == 1 && _isBeingCheerd))
         {
-            print(_jumpCount);
             Jump();
         }
     }
@@ -170,30 +176,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _jumpCount++;
     }
 
-    private void Push()
-    {
-        if (_movingObject)
-        {
-            _movingObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(5000, 0), ForceMode2D.Impulse);
-        }
-    }
-
-    private void Pull()
-    {
-        if (_movingObject)
-        {
-            _isObjectBeingPulled = !_isObjectBeingPulled;
-            if (_isObjectBeingPulled)
-            {
-                _movingObject.transform.SetParent(transform);
-            }
-            else
-            {
-                _movingObject.transform.SetParent(null);
-            }
-        }
-    }
-
     private void Cheer()
     {
         if (_jumpCount != 0)
@@ -201,10 +183,13 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
         _isCheering = true;
         OnCheerAction?.Invoke();
+        _levelAnimator.SetAddAnimation("Cheer", true, 0, false);
+
         this.SetTimer(_cheerTime, () =>
         {
             _isCheering = false;
             OnCheerEndAction?.Invoke();
+            _levelAnimator.PlayIdleAnimation();
         });
     }
 
@@ -214,19 +199,19 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         {
             _jumpCount = 0;
         }
-        if(collision.gameObject.CompareTag("MovingObject"))
-        {
-            _movingObject = collision.gameObject;
-        }
+        //if(collision.gameObject.CompareTag("MovingObject"))
+        //{
+        //    _movingObject = collision.gameObject;
+        //}
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("MovingObject"))
-        {
-            _movingObject = null;
-        }
-    }
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("MovingObject"))
+    //    {
+    //        _movingObject = null;
+    //    }
+    //}
 
     public void Stun(int stunAmount = 10)
     {
@@ -241,11 +226,13 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
         if (StunLevel % 2 == 0)
         {
-            StunLevel = 0;
+            StunLevel = 10;
             return;
         }
 
-        StunLevel++;
+        StunLevel--;
+        if (StunLevel == 0)
+            _isStunned = false;
     }
 
     private void OnSquarePress()
@@ -255,15 +242,20 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
         if (StunLevel % 2 == 1)
         {
-            StunLevel = 0;
+            StunLevel = 10;
             return;
         }
 
-        StunLevel++;
+        StunLevel--;
+        if (StunLevel == 0)
+            _isStunned = false;
     }
 
     public void OnStun(int stunAmount)
     {
+        Debug.Log("OnStun");
+
         _isStunned = true;
+        _levelAnimator.SetAddAnimation("Stun", true, 0, false);
     }
 }

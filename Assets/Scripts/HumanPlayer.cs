@@ -52,6 +52,7 @@ public class HumanPlayer : MonoBehaviour
         movementYRight = movementVector.y;
         OnRightAnalogMove.Invoke(movementVector);
     }
+
     public void OnFire()
     {
         print(name + "fire");
