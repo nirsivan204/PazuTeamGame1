@@ -85,9 +85,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
                 _isWalking = true;
             }
 
-            if (_jumpCount > 0)
-                return;
-
             PlayWalkingAnimation();
             _rb.velocity = new Vector2(_controller1.movementXLeft * _movmentSpeed, _rb.velocity.y);
         }
@@ -165,7 +162,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private void Jump()
     {
         _movement.y = _jumpSpeed;
-        _movement.x = _dirX * _movmentSpeed;
+       // _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
     }
@@ -212,11 +209,11 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.CompareTag("Platform"))
         {
             _jumpCount = 0;
         }
-        if(collision.gameObject.tag == "MovingObject")
+        if(collision.gameObject.CompareTag("MovingObject"))
         {
             _movingObject = collision.gameObject;
         }
@@ -224,7 +221,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "MovingObject")
+        if (collision.gameObject.CompareTag("MovingObject"))
         {
             _movingObject = null;
         }
