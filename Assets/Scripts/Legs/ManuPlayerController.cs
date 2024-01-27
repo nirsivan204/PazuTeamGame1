@@ -16,6 +16,7 @@ public class ManuPlayerController : AbstractPlayerMovement
 
     [SerializeField] private Image frame1;
     [SerializeField] private Image frame2;
+    [SerializeField] private GameObject[] characters;
 
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
@@ -37,12 +38,12 @@ public class ManuPlayerController : AbstractPlayerMovement
         _controller1.OnXPress.AddListener(OnSelect);
         //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller1.OnCirclePress.AddListener(OnBack);
-       // _controller1.OnLeftAnalogMove.AddListener(Move);
+        // _controller1.OnLeftAnalogMove.AddListener(Move);
     }
 
     private void OnSelect2()
     {
-        if(_currentManu == 3)
+        if (_currentManu == 3)
         {
             if (player2Show && player1Show)
             {
@@ -50,12 +51,16 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
             else
             {
-                showSecondPlayer();
+                if (!player2Show)
+                {
+                    showSecondPlayer();
+                    player2Show = true;
+                }
             }
         }
     }
 
-    
+
 
     private void OnSelect()
     {
@@ -67,22 +72,41 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
             else
             {
-                showFirstPlayer();
-                player1Show = true;
+                if (!player1Show)
+                {
+                    showFirstPlayer();
+                    player1Show = true;
+                }
+
             }
         }
     }
     private void showSecondPlayer()
     {
         player2Show = true;
-        print("nir");
-        LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 1);
+        StartCoroutine(GetBig(frame2.transform));
+        //LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 2);
+        characters[1].SetActive(true);
+    }
 
+    IEnumerator GetBig(Transform t)
+    {
+        int i = 0;
+        WaitForSeconds wait = new WaitForSeconds(0.02f);
+        while (i < 50)
+        {
+            t.transform.localScale += Vector3.one * 0.14f;
+            i++;
+            yield return wait;
+        }
     }
     private void showFirstPlayer()
     {
         player1Show = true;
-        LeanTween.scale(frame1.gameObject,7*Vector3.one,2);
+        StartCoroutine(GetBig(frame1.transform));
+
+        characters[0].SetActive(true);
+
     }
     bool isGameStarted = false;
     private void StartGame()
@@ -94,13 +118,13 @@ public class ManuPlayerController : AbstractPlayerMovement
     }
 
 
-    public void SelectOnHomeScreen()
+/*    public void SelectOnHomeScreen()
     {
         Button button = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         if (button == null)
             return;
         button.OnPointerClick(new PointerEventData(EventSystem.current));
-/*        if(_currentOption == 0)
+*//*        if(_currentOption == 0)
         {
             _currentManu = 3;
             UpdateManu();
@@ -114,9 +138,9 @@ public class ManuPlayerController : AbstractPlayerMovement
         {
             _currentManu = 2;
             UpdateManu();
-        }*/
+        }*//*
         //EventManagerCurrentButton
-    }
+    }*/
 
     private void OnBack()
     {
