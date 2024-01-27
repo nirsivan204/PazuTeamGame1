@@ -36,7 +36,6 @@ public class StunOrb : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(_orb);
         _orbListener = MessageBroker.Default.Receive<OrbDisableEvent>().ObserveOnMainThread().Subscribe(OnOrbStun);
     }
 
