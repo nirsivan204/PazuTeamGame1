@@ -151,17 +151,18 @@ public class SquenceManager : MonoBehaviour
         //hands sprite
         if (spriteIndex > 7)
         {
-            spriteIndex -= 7;
-            RemoveSpriteOnTrigger?.Invoke();
-            _spriteRenderer.enabled = true;
-            _spriteRenderer.sprite = Sprites[spriteIndex];
+            spriteIndex -= 8;
+            _spriteRenderer.enabled = false;
+            ChangeSpriteOnTrigger?.Invoke(Sprites[spriteIndex]);
+
 
         }
         //Legs sprite
         else
         {
-            _spriteRenderer.enabled = false;
-            ChangeSpriteOnTrigger?.Invoke(Sprites[spriteIndex]);
+            RemoveSpriteOnTrigger?.Invoke();
+            _spriteRenderer.enabled = true;
+            _spriteRenderer.sprite = Sprites[spriteIndex];
 
         }
     }
@@ -179,14 +180,15 @@ public class SquenceManager : MonoBehaviour
     private void CheckButton(int buttonNum)
     {
         if (_isStartTest) {
-            SpritePicker();
             //_spriteRenderer.sprite = Sprites[_currentSequence[_squenceIndex]];
                 if (_currentSequence[_squenceIndex] == buttonNum)
                 {
                     _squenceIndex++;
                     _squenceIndex %= _currentSequence.Length;
                     Debug.Log("Succses, next number is - " + _currentSequence[_squenceIndex]);
-                    if (_squenceIndex == _currentSequence.Length)
+                    SpritePicker();
+
+                if (_squenceIndex == _currentSequence.Length)
                     {
                         Debug.Log("PassedTest");
                         //PassTestEvent

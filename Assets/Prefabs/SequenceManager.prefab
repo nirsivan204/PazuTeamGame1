@@ -157,6 +157,12 @@ MonoBehaviour:
   - {fileID: 618310824, guid: e89379a5d7215634a82ac251ce7ad025, type: 3}
   - {fileID: -1301100750, guid: e89379a5d7215634a82ac251ce7ad025, type: 3}
   _whatSequence: 1
+  ChangeSpriteOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  RemoveSpriteOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   _isPlayer1Here: 0
 --- !u!1 &8741757942295447432
 GameObject:
@@ -184,7 +190,7 @@ Transform:
   m_GameObject: {fileID: 8741757942295447432}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.694, y: 0.687, z: 0}
+  m_LocalPosition: {x: -5, y: 0.687, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
