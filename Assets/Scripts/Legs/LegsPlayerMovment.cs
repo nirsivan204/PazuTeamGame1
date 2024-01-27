@@ -85,9 +85,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
                 _isWalking = true;
             }
 
-            if (_jumpCount > 0)
-                return;
-
             PlayWalkingAnimation();
             _rb.velocity = new Vector2(_controller1.movementXLeft * _movmentSpeed, _rb.velocity.y);
         }
@@ -165,7 +162,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private void Jump()
     {
         _movement.y = _jumpSpeed;
-        _movement.x = _dirX * _movmentSpeed;
+       // _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
     }
