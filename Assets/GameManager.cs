@@ -10,10 +10,32 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Win;
     [SerializeField] GameObject Lose;
 
-
+   public static GameManager instance;
     bool isInit;
+    public static bool isCredits;
 
-    public void  onWIn()
+
+    public static void  OnWin()
+    {
+        instance.onWIn();
+    }
+    public static void OnLose()
+    {
+        instance.onLose();
+    }
+
+    public void StopPlayersInput()
+    {
+
+    }
+
+    public void OnCredits()
+    {
+        isCredits = true;
+        SceneManager.LoadScene(2);
+    }
+
+    public void  onWIn(bool isGood = true)
     {
         Win.SetActive(true);
     }
@@ -60,7 +82,7 @@ public class GameManager : MonoBehaviour
                     SceneManager.LoadScene(1, LoadSceneMode.Additive);
 
                 }
-                print(SceneManager.GetActiveScene().buildIndex);
+                instance = this;
             }
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex == 0 ? 1 : 0, LoadSceneMode.Additive);

@@ -17,6 +17,11 @@ public class ManuPlayerController : AbstractPlayerMovement
     [SerializeField] private Image frame1;
     [SerializeField] private Image frame2;
     [SerializeField] private GameObject[] characters;
+    [SerializeField] private GameObject[] images;
+    [SerializeField] private Text _credits;
+    [SerializeField] private GameObject _sprite2;
+    [SerializeField] private GameObject _sprite1;
+
 
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
@@ -38,6 +43,15 @@ public class ManuPlayerController : AbstractPlayerMovement
         _controller1.OnXPress.AddListener(OnSelect);
         //_controller2.OnRightAnalogMove.AddListener(MoveRightStick);
         _controller1.OnCirclePress.AddListener(OnBack);
+        if (GameManager.isCredits)
+        {
+            UpdateManu(2);
+            GameManager.isCredits = false;
+        }
+        else
+        {
+            UpdateManu(0);
+        }
         // _controller1.OnLeftAnalogMove.AddListener(Move);
     }
 
@@ -84,18 +98,19 @@ public class ManuPlayerController : AbstractPlayerMovement
     private void showSecondPlayer()
     {
         player2Show = true;
-        StartCoroutine(GetBig(frame2.transform));
+        StartCoroutine(GetBig(frame2.transform,1));
         //LeanTween.scale(frame2.gameObject, 7 * Vector3.one, 2);
         characters[1].SetActive(true);
     }
 
-    IEnumerator GetBig(Transform t)
+    IEnumerator GetBig(Transform t,int index)
     {
         int i = 0;
         WaitForSeconds wait = new WaitForSeconds(0.02f);
         while (i < 50)
         {
             t.transform.localScale += Vector3.one * 0.14f;
+            images[index].transform.Rotate(Vector3.right,1.8f);
             i++;
             yield return wait;
         }
@@ -103,7 +118,7 @@ public class ManuPlayerController : AbstractPlayerMovement
     private void showFirstPlayer()
     {
         player1Show = true;
-        StartCoroutine(GetBig(frame1.transform));
+        StartCoroutine(GetBig(frame1.transform,0));
 
         characters[0].SetActive(true);
 
@@ -117,6 +132,29 @@ public class ManuPlayerController : AbstractPlayerMovement
         SceneManager.LoadScene(1);
     }
 
+    public void OnCredits()
+    {
+        _credits.rectTransform.position = new Vector2(250,-100);
+        StartCoroutine(RollCredits());
+    }
+
+    private IEnumerator RollCredits()
+    {
+        int i = 0;
+        WaitForSeconds wait = new WaitForSeconds(0.02f);
+        while(i < 650)
+        {
+            _credits.rectTransform.position += Vector3.up * 5f;
+            i++;
+            if (i % 10 == 0)
+            {
+                _sprite1.gameObject.SetActive(i % 20 == 0);
+                _sprite2.gameObject.SetActive(i % 20 != 0);
+            }
+
+            yield return wait;
+        }
+    }
 
     public void SelectOnHomeScreen()
     {
@@ -175,6 +213,10 @@ public class ManuPlayerController : AbstractPlayerMovement
             }
         }
         _currentManu = index;
+        if(_currentManu == 2)
+        {
+            OnCredits();
+        }
         isChangingManu = false;
     }
 
