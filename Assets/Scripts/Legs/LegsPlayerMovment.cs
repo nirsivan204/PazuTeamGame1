@@ -9,6 +9,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 {
     [SerializeField] private float _movmentSpeed = 8f;
     [SerializeField] private float _jumpSpeed = 15f;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _clips;
 
     public static LegsPlayerMovment Instance { get; private set; }
 
@@ -178,6 +180,8 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _movement.y = _jumpSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
+        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(6, 9)]);
+
     }
 
     private void Cheer()
@@ -188,6 +192,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _isCheering = true;
         OnCheerAction?.Invoke();
         _levelAnimator.SetAddAnimation("Cheer", true, 0, false);
+        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(2,6)]);
 
         this.SetTimer(_cheerTime, () =>
         {
@@ -230,6 +235,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
             _isDancing = true;
             float time = _levelAnimator.GetAnimationLength("Dance");
             _levelAnimator.SetAddAnimation("Dance", false, 0, false);
+            _audioSource.PlayOneShot(_clips[1]);
             this.SetTimer(time, () => { _isDancing = false; });
             return;
         }
@@ -252,6 +258,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
             _isDancing = true;
             float time = _levelAnimator.GetAnimationLength("Dance");
             _levelAnimator.SetAddAnimation("Dance", false, 0, false);
+            _audioSource.PlayOneShot(_clips[1]);
             this.SetTimer(time, () => { _isDancing = false; });
             return;
         }
@@ -271,5 +278,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     {
         _isStunned = true;
         _levelAnimator.SetAddAnimation("Stun", true, 0, false);
+        _audioSource.PlayOneShot(_clips[0]);
     }
 }
