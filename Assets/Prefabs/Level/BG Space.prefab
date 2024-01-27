@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _otherBackground: {fileID: 0}
   _ySize: 0
-  _movementVector: {x: 0, y: 4, z: 0}
+  _movementVector: {x: 0, y: 0.6, z: 0}
   _renderer: {fileID: 6154859973095552253}
 --- !u!50 &3346481047682545649
 Rigidbody2D:
