@@ -94,6 +94,9 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void LateUpdate()
     {
+        if (_isStunned)
+            return;
+
         if (_rb.velocity.y > 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Up")
         {
             _isJumping = true;
@@ -122,7 +125,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         }
         else if(!_isWalking && _levelAnimator.GetAnimationName() != "Idle")
         {
-            _levelAnimator.SetAddAnimation("Walking_Loop_Full", true, 0, false);
+            _levelAnimator.PlayIdleAnimation();
         }
     }
 
@@ -253,8 +256,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     public void OnStun(int stunAmount)
     {
-        Debug.Log("OnStun");
-
         _isStunned = true;
         _levelAnimator.SetAddAnimation("Stun", true, 0, false);
     }
