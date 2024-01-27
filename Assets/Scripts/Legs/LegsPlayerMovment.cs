@@ -14,6 +14,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private LevelAnimator _levelAnimator;
     private HumanPlayer _controller1;
     private HumanPlayer _controller2;
+    private GameObject _movingObject;
 
     private Vector2 _movement;
     private Rigidbody2D _rb;
@@ -22,8 +23,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private bool _isBeingCheerd = true;
     private bool _isCheering = false;
     private bool isStunned = false;
-    private bool _canMove = false;
-    private bool _isTouchingBorder = false;
+    private bool _isObjectBeingPulled = false;
     
     public int StunLevel = 0;
     public float _jumpCount = 0;
@@ -85,9 +85,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
                 _isWalking = true;
             }
 
-            if (_jumpCount > 0)
-                return;
-
             PlayWalkingAnimation();
             _rb.velocity = new Vector2(_controller1.movementXLeft * _movmentSpeed, _rb.velocity.y);
         }
@@ -130,6 +127,9 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         }
         else
         {
+            if (_isObjectBeingPulled)
+                return;
+
             int direction = movement > 0 ? 1 : -1;
             if (direction != _dirX)
             {
@@ -162,24 +162,32 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private void Jump()
     {
         _movement.y = _jumpSpeed;
-        _movement.x = _dirX * _movmentSpeed;
+       // _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
     }
 
     private void Push()
     {
-        if (_canMove)
+        if (_movingObject)
         {
-
+            _movingObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(5000, 0), ForceMode2D.Impulse);
         }
     }
 
     private void Pull()
     {
-        if (_canMove)
+        if (_movingObject)
         {
-
+            _isObjectBeingPulled = !_isObjectBeingPulled;
+            if (_isObjectBeingPulled)
+            {
+                _movingObject.transform.SetParent(transform);
+            }
+            else
+            {
+                _movingObject.transform.SetParent(null);
+            }
         }
     }
 
@@ -198,31 +206,24 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
             OnCheerEndAction?.Invoke();
         });
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.CompareTag("Platform"))
         {
             _jumpCount = 0;
         }
-        if(collision.gameObject.tag == "MovingObject")
+        if(collision.gameObject.CompareTag("MovingObject"))
         {
-            _canMove = true;
-        }
-        if(collision.gameObject.tag == "Border")
-        {
-            _isTouchingBorder = true;
+            _movingObject = collision.gameObject;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "MovingObject")
+        if (collision.gameObject.CompareTag("MovingObject"))
         {
-            _canMove = false;
-        }
-        if (collision.gameObject.tag == "Border")
-        {
-            _isTouchingBorder = false;
+            _movingObject = null;
         }
     }
 

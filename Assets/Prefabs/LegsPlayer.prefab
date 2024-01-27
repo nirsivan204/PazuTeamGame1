@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movmentSpeed: 6
-  _jumpSpeed: 8
+  _jumpSpeed: 10
   StunLevel: 0
   _jumpCount: 0
 --- !u!50 &2177321412870596308

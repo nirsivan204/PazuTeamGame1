@@ -15,7 +15,10 @@ public enum Door
     LegsDoor1,
     LegsDoor2,
     LegsDoor3,
-    LegsDoor4
+    LegsDoor4,
+    LegsDoor5,
+    LegsDoor6,
+    LegsDoor7
 }
 
 public class DoorSwitchedEvent

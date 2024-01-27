@@ -99,7 +99,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
                 }
             });
         }
-        else if(!isDoubleDashing)
+        else if(_isBeingCheerd && !isDoubleDashing)
         {
             isDoubleDashing = true;
             _speed = _doubleDashSpeed;
@@ -117,10 +117,13 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void Cheer()
     {
-        if (isStunned || isDashing || isDoubleDashing)
+        if (isCheering || isStunned || isDashing || isDoubleDashing)
             return;
 
         isCheering = true;
+        x = 0;
+        y = 0;
+        levelAnimator.SetAddAnimation("Cheer", false, 0, false);
         OnCheerAction?.Invoke();
         this.SetTimer(_cheerTime, () =>
         {
@@ -132,14 +135,15 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void OnStun(int stunAmount)
     {
-        Debug.Log("Stun!!");
         Stun(stunAmount);
     }
 
     public void Stun(int stunAmount = 10)
     {
         isStunned = true;
-        levelAnimator.SetAddAnimation("Idle", true, 0, false);
+        x = 0;
+        y = 0;
+        levelAnimator.SetAddAnimation("Stunned", true, 0, false);
         StunLevel = stunAmount;
         _leftStunButtonNeeded = true;
         _rightStunButtonNeeded = false;
@@ -147,7 +151,6 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void LeftStunButton()
     {
-        Debug.Log("LeftStunButton");
         if (_leftStunButtonNeeded)
         {
             StunLevel--;
@@ -168,7 +171,6 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void RightStunButton()
     {
-        Debug.Log("RightStunButton");
         if (_rightStunButtonNeeded)
         {
             StunLevel--;
@@ -235,7 +237,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
         Vector2 movement = new Vector2(x, y).normalized;
         float magnitue = movement.magnitude;
-        if (magnitue == 0 && levelAnimator.GetAnimationName() != "Idle")
+        if (magnitue == 0 && levelAnimator.GetAnimationName() != "Idle" && !isStunned && !isCheering)
         {
             levelAnimator.PlayIdleAnimation();
         }
