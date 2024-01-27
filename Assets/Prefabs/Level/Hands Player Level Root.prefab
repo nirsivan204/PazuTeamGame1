@@ -5326,7 +5326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _endPositionX: 3.42
   _sliderDistancePerFrame: 0.05
-  _door: 0
+  _door: 2
 --- !u!65 &2939706830219782287
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5577,7 +5577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516c8995a2deaf1468ce78e712944ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: 0
+  _door: 8
 --- !u!58 &7668827682057574644
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10713,7 +10713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _endPositionX: -9.28
   _sliderDistancePerFrame: 0.05
-  _door: 0
+  _door: 3
 --- !u!65 &6486162249746212332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12933,7 +12933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516c8995a2deaf1468ce78e712944ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: 0
+  _door: 7
 --- !u!58 &7561704556920806776
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -13538,6 +13538,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pink Gap Mask
       objectReference: {fileID: 0}
+    - target: {fileID: 2739983214465219224, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3419869172211408572, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -13688,6 +13692,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pink Gap Mask
       objectReference: {fileID: 0}
+    - target: {fileID: 2739983214465219224, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3419869172211408572, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -13837,6 +13845,10 @@ PrefabInstance:
     - target: {fileID: 2739983214465219224, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
       propertyPath: m_Name
       value: Pink Gap Mask (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739983214465219224, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3419869172211408572, guid: 5098cb6ad0e7e5f4089d38536e149f36, type: 3}
       propertyPath: m_SortingOrder

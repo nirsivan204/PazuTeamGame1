@@ -1410,10 +1410,6 @@ PrefabInstance:
       propertyPath: _cheerTime
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
-      propertyPath: GapReactionTime
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
