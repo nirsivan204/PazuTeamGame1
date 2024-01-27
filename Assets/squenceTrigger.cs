@@ -9,8 +9,12 @@ public class squenceTrigger : MonoBehaviour
 
     private void Awake()
     {
+        if (SquenceManager.instance != null)
+        {
         SquenceManager.instance.ChangeSpriteOnTrigger.AddListener(SpriteChange);
         SquenceManager.instance.RemoveSpriteOnTrigger.AddListener(SpriteRemove);
+           
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -22,6 +26,7 @@ public class squenceTrigger : MonoBehaviour
     }
     private void SpriteChange(Sprite sprite)
     {
+        print("change");
         if (sprite != null) {
             _spriteRenderer.enabled = true;
             _spriteRenderer.sprite = sprite;
@@ -29,6 +34,8 @@ public class squenceTrigger : MonoBehaviour
     }
     private void SpriteRemove()
     {
+        print("remove");
+
         _spriteRenderer.enabled = false;
     }
 }
