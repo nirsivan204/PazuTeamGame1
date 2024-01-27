@@ -354,6 +354,7 @@ MonoBehaviour:
   Clips:
   - {fileID: 8300000, guid: 36d3bc62c4d6d364193e7b65fce0493b, type: 3}
   - {fileID: 8300000, guid: c7cf785ce37e63045b3b660074e0ec1b, type: 3}
+  - {fileID: 8300000, guid: c7cf785ce37e63045b3b660074e0ec1b, type: 3}
   - {fileID: 8300000, guid: ec1189be48c7808499df2d90aec26196, type: 3}
   - {fileID: 8300000, guid: 7a4cf97dfacfe374b80ce16a8afbabce, type: 3}
   - {fileID: 8300000, guid: 7a4cf97dfacfe374b80ce16a8afbabce, type: 3}
@@ -1857,6 +1858,22 @@ PrefabInstance:
       propertyPath: _cheerTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 75c62ff2a18e2544993884c809c61013, type: 3}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 77f6dade5ea2c2947bb3d09309616065, type: 3}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ae446cfebc1f69e428b15f7b09efd877, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
