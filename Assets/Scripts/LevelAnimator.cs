@@ -59,7 +59,7 @@ public class LevelAnimator : MonoBehaviour
         return _skeletonAnimation.AnimationName;
     }
 
-    private float GetAnimationLength(string animationName)
+    public float GetAnimationLength(string animationName)
     {
         return _skeletonAnimation.Skeleton.Data.FindAnimation(animationName).Duration;
     }
