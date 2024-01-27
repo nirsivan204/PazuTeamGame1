@@ -530,6 +530,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1277029191790562317, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1881598543206036681, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -541,6 +545,10 @@ PrefabInstance:
     - target: {fileID: 2887001780288977341, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764673676175708363, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6812274232728878317, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_Mesh
@@ -594,6 +602,10 @@ PrefabInstance:
       propertyPath: _controller2
       value: 
       objectReference: {fileID: 1788314376}
+    - target: {fileID: 7874996924797674799, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8616570054051821852, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_Size.y
       value: 1.3287396
