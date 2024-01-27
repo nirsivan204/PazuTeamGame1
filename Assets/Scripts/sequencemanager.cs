@@ -137,6 +137,7 @@ public class SquenceManager : MonoBehaviour
         Debug.Log("Start Test");
         if (_isStartTest)
             return;
+        GameManager.Instance.StopPlayersInput();
         _isStartTest = true;
 
         PickSequence();
@@ -191,12 +192,16 @@ public class SquenceManager : MonoBehaviour
                 if (_squenceIndex == _currentSequence.Length)
                     {
                         Debug.Log("PassedTest");
+                        GameManager.Instance.onWIn(true);
+
                         //PassTestEvent
                     }
                 }
                 else
                 {
-                    _squenceIndex = 0;
+                    GameManager.Instance.onWIn(false);
+
+                    //_squenceIndex = 0;
                     Debug.Log("Failed Test value is -" + buttonNum);
                 }
             }
