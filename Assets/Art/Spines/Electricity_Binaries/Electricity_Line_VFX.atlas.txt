@@ -1,0 +1,11 @@
+Electricity_Line_VFX.png
+size:86,58
+filter:Linear,Linear
+pma:true
+scale:0.2
+Large_Lightning_1
+bounds:2,37,79,19
+Large_Lightning_2
+bounds:2,19,82,16
+Large_Lightning_3
+bounds:2,2,81,15
