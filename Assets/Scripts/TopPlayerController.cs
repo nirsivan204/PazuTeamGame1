@@ -63,6 +63,13 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         }
     }
 
+    bool isStop = false;
+
+    public void stopMovment()
+    {
+        isStop = true;
+    }
+
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
     {
         print("init Hands");
@@ -84,7 +91,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     }
     public void Dash()
     {
-        if (isStunned || isCheering)
+        if (isStunned || isCheering || isStop)
             return;
 
         if (!isDashing && !isDoubleDashing)
@@ -126,7 +133,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void Cheer()
     {
-        if (isCheering || isStunned || isDashing || isDoubleDashing)
+        if (isCheering || isStunned || isDashing || isDoubleDashing || isStop)
             return;
 
         isCheering = true;
@@ -233,7 +240,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     private void FixedUpdate()
     {
-        if (!isStunned && !isDashing && !isDoubleDashing && !isCheering)
+        if (!isStunned && !isDashing && !isDoubleDashing && !isCheering && !isStop)
         {
             x = 0;
             y = 0;

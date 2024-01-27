@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
 
     public void StopPlayersInput()
     {
+        TopPlayerController topPlayer= FindObjectOfType<TopPlayerController>();
+        LegsPlayerMovment legPlayer = FindObjectOfType<LegsPlayerMovment>();
+        topPlayer.stopMovment();
+        legPlayer.stopMovment();
 
     }
 
