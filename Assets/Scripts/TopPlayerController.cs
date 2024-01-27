@@ -99,7 +99,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
                 }
             });
         }
-        else if(!isDoubleDashing)
+        else if(_isBeingCheerd && !isDoubleDashing)
         {
             isDoubleDashing = true;
             _speed = _doubleDashSpeed;
