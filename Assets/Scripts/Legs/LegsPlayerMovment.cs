@@ -2,6 +2,7 @@ using Legs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
@@ -20,11 +21,11 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private Rigidbody2D _rb;
 
     private bool _isWalking = false;
-    private bool _isBeingCheerd = true;
+    private bool _isBeingCheerd = false;
     private bool _isCheering = false;
-    private bool isStunned = false;
+    private bool _isStunned = false;
     private bool _isObjectBeingPulled = false;
-    
+
     public int StunLevel = 0;
     public float _jumpCount = 0;
     private int _dirX;
@@ -40,19 +41,12 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
             Instance = this;
         }
         _rb = GetComponent<Rigidbody2D>();
-
-        if (TopPlayerController.Instance != null)
-        {
-            TopPlayerController.Instance.OnCheerAction += () => _isBeingCheerd = true;
-            TopPlayerController.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
-        }
-
         _levelAnimator = GetComponentInChildren<LevelAnimator>();
     }
 
+
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
     {
-        print("init legs");
         _controller1 = controller1;
         _controller2 = controller2;
         _controller2.OnXPress.AddListener(CheckJump);
@@ -67,11 +61,17 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private void Start()
     {
         _levelAnimator.PlayIdleAnimation();
+
+        if (TopPlayerController.Instance != null)
+        {
+            TopPlayerController.Instance.OnCheerAction += () =>  _isBeingCheerd = true;
+            TopPlayerController.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
+        }
     }
 
     private void Update()
     {
-        if(_controller1 != null)
+        if(_controller1 != null && !_isStunned && !_isCheering)
         {
             CheckDirection(_controller1.movementXLeft);
 
@@ -153,8 +153,12 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void CheckJump()
     {
-        if (_jumpCount == 0 || (_jumpCount == 1 & _isBeingCheerd))
+        if (_isCheering || _isStunned)
+            return;
+
+        if (_jumpCount == 0 || (_jumpCount == 1 && _isBeingCheerd))
         {
+            print(_jumpCount);
             Jump();
         }
     }
@@ -162,7 +166,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private void Jump()
     {
         _movement.y = _jumpSpeed;
-       // _movement.x = _dirX * _movmentSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
     }
@@ -196,8 +199,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         if (_jumpCount != 0)
             return;
 
-        Debug.Log("Cheer!");
-
         _isCheering = true;
         OnCheerAction?.Invoke();
         this.SetTimer(_cheerTime, () =>
@@ -229,13 +230,13 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     public void Stun(int stunAmount = 10)
     {
-        isStunned = true;
+        _isStunned = true;
         StunLevel = stunAmount;
     }
 
     private void OnCirclePress()
     {
-        if (!isStunned)
+        if (!_isStunned)
             return;
 
         if (StunLevel % 2 == 0)
@@ -249,7 +250,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnSquarePress()
     {
-        if (!isStunned)
+        if (!_isStunned)
             return;
 
         if (StunLevel % 2 == 1)
@@ -263,6 +264,6 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     public void OnStun(int stunAmount)
     {
-        throw new NotImplementedException();
+        _isStunned = true;
     }
 }
