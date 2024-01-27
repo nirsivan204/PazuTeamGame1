@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void OnReturnToMainManu()
     {
-        SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
+        //SceneManager.MoveGameObjectToScene(this.gameObject, SceneManager.GetActiveScene());
         SceneManager.LoadScene(2);
     }
 

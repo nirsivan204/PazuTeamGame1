@@ -68,12 +68,22 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         }
     }
 
+    bool isStop = false;
+
+    public void stopMovment()
+    {
+        isStop = true;
+    }
+
     private void Update()
     {
         if (_isStunned)
             return;
 
         if (_isCheering)
+            return;
+
+        if (isStop)
             return;
 
         if (_controller1 != null)
