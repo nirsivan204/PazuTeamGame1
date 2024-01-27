@@ -7,11 +7,17 @@ public class DoorSwitch : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        MessageBroker.Default.Publish(new DoorSwitchedEvent { DoorNumber = _door, OpenDoor = true });
+        if (other.CompareTag("Legs") || other.CompareTag("Hands"))
+        {
+            MessageBroker.Default.Publish(new DoorSwitchedEvent { DoorNumber = _door, OpenDoor = true });
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        MessageBroker.Default.Publish(new DoorSwitchedEvent { DoorNumber = _door, OpenDoor = false });
+        if (other.CompareTag("Legs") || other.CompareTag("Hands"))
+        {
+            MessageBroker.Default.Publish(new DoorSwitchedEvent { DoorNumber = _door, OpenDoor = false });
+        }
     }
 }
