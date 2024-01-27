@@ -32,7 +32,11 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
     private float _cheerTime = 2f;
     public event Action OnCheerAction;
     public event Action OnCheerEndAction;
-
+    bool isStop;
+    public void stopMovment()
+    {
+        isStop = true;
+    }
     private void Awake()
     {
         if (Instance == null)
@@ -67,6 +71,9 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void Update()
     {
+        if (isStop)
+            return;
+
         if (_isStunned)
             return;
 
@@ -94,7 +101,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void LateUpdate()
     {
-        if (_isStunned)
+        if (_isStunned || isStop)
             return;
 
         if (_rb.velocity.y > 0 && _levelAnimator.GetAnimationName() != "Jump_Cycle_Up")
@@ -116,7 +123,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void PlayWalkingAnimation()
     {
-        if (_isJumping || _isStunned || _isCheering)
+        if (_isJumping || _isStunned || _isCheering || isStop)
             return;
 
         if (_isWalking && _levelAnimator.GetAnimationName()!= "Walking_Loop_Full")
@@ -163,7 +170,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void CheckJump()
     {
-        if (_isCheering || _isStunned)
+        if (_isCheering || _isStunned || isStop)
             return;
 
         if (_jumpCount == 0 || (_jumpCount == 1 && _isBeingCheerd))
@@ -181,7 +188,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void Cheer()
     {
-        if (_jumpCount != 0)
+        if (_jumpCount != 0 || isStop)
             return;
 
         _isCheering = true;
@@ -224,7 +231,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnCirclePress()
     {
-        if (!_isStunned)
+        if (!_isStunned || isStop)
             return;
 
         if (StunLevel % 2 == 0)
@@ -240,7 +247,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnSquarePress()
     {
-        if (!_isStunned)
+        if (!_isStunned || isStop)
             return;
 
         if (StunLevel % 2 == 1)

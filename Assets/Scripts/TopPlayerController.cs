@@ -48,6 +48,8 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     public AudioClip[] DashSounds;
     public AudioClip[] ClapSounds;
 
+    private bool _isDancing;
+
     private void Awake()
     {
         if (Instance == null)
@@ -61,6 +63,13 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
             LegsPlayerMovment.Instance.OnCheerAction += () => _isBeingCheerd = true;
             LegsPlayerMovment.Instance.OnCheerEndAction += () => _isBeingCheerd = false;
         }
+    }
+
+    bool isStop = false;
+
+    public void stopMovment()
+    {
+        isStop = true;
     }
 
     public override void Init(HumanPlayer controller1, HumanPlayer controller2)
@@ -84,8 +93,10 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     }
     public void Dash()
     {
-        if (isStunned || isCheering)
+        if (isStunned || isCheering || isStop)
             return;
+
+        _isDancing = false;
 
         if (!isDashing && !isDoubleDashing)
         {
@@ -126,10 +137,11 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public void Cheer()
     {
-        if (isCheering || isStunned || isDashing || isDoubleDashing)
+        if (isCheering || isStunned || isDashing || isDoubleDashing || isStop)
             return;
 
         isCheering = true;
+        _isDancing = false;
         x = 0;
         y = 0;
         levelAnimator.SetAddAnimation("Cheer", false, 0, false);
@@ -161,6 +173,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     public void OnStun(int stunAmount)
     {
         Stun(stunAmount);
+        _isDancing = false;
     }
 
     public void Stun(int stunAmount = 10)
@@ -192,6 +205,11 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
                 _rightStunButtonNeeded = true;
             }
         }
+        else if (!isCheering && !isStunned && !isDashing && !isDoubleDashing)
+        {
+            _isDancing = true;
+            levelAnimator.SetAddAnimation("Dance", true, 0, false);
+        }
     }
 
     public void RightStunButton()
@@ -211,6 +229,11 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
                 _leftStunButtonNeeded = true;
                 _rightStunButtonNeeded = false;
             }
+        }
+        else if(!isCheering && !isStunned && !isDashing && !isDoubleDashing)
+        {
+            _isDancing = true;
+            levelAnimator.SetAddAnimation("Dance", true, 0, false);
         }
     }
 
@@ -233,7 +256,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     private void FixedUpdate()
     {
-        if (!isStunned && !isDashing && !isDoubleDashing && !isCheering)
+        if (!isStunned && !isDashing && !isDoubleDashing && !isCheering && !isStop)
         {
             x = 0;
             y = 0;
@@ -262,12 +285,14 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
         Vector2 movement = new Vector2(x, y).normalized;
         float magnitue = movement.magnitude;
-        if (magnitue == 0 && levelAnimator.GetAnimationName() != "Idle" && !isStunned && !isCheering)
+        if (magnitue == 0 && levelAnimator.GetAnimationName() != "Idle" && !isStunned && !isCheering && !_isDancing)
         {
             levelAnimator.PlayIdleAnimation();
         }
         else if(magnitue > .1f)
         {
+            _isDancing = false;
+
             float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
 
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle - 90), _rotationSpeed * Time.deltaTime);
