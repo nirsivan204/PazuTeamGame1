@@ -249,6 +249,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3171869208269559342, guid: 6b59753e5d8181445b103411ba41f01c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5075636795211045196, guid: 6b59753e5d8181445b103411ba41f01c, type: 3}
       propertyPath: m_Name
       value: StunOrb (1)
@@ -415,10 +419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d04db9a827cd724b9dc10aed97104b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XMin: -3
-  XMax: 3
-  YMin: 7
-  YMax: 100
   chaser: {fileID: 1689543127}
   player: {fileID: 5359112560194803870}
 --- !u!20 &656656419
@@ -1459,6 +1459,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3171869208269559342, guid: 6b59753e5d8181445b103411ba41f01c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5075636795211045196, guid: 6b59753e5d8181445b103411ba41f01c, type: 3}
       propertyPath: m_Name
       value: StunOrb (2)
@@ -1608,6 +1612,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3171869208269559342, guid: 6b59753e5d8181445b103411ba41f01c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5075636795211045196, guid: 6b59753e5d8181445b103411ba41f01c, type: 3}
       propertyPath: m_Name
       value: StunOrb
@@ -1689,6 +1697,22 @@ PrefabInstance:
       propertyPath: _cheerTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 75c62ff2a18e2544993884c809c61013, type: 3}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 77f6dade5ea2c2947bb3d09309616065, type: 3}
+    - target: {fileID: 4920743010563768686, guid: 4d02f314837420c478cbc7368dbd4d50, type: 3}
+      propertyPath: DashSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ae446cfebc1f69e428b15f7b09efd877, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

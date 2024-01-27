@@ -24,12 +24,15 @@ public class StunOrb : MonoBehaviour
     public int StunAmount = 10;
     private IDisposable _orbListener;
     [SerializeField] private Orb _orb;
+    public AudioSource AudioSource;
+    public AudioClip Clip;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.GetComponent<IStunnable>() is IStunnable stunnable)
         {
             stunnable.OnStun(StunAmount);
+            AudioSource.PlayOneShot(Clip);
             MessageBroker.Default.Publish(new OrbDisableEvent { OrbNumber = _orb });
         }
     }
