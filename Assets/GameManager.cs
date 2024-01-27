@@ -10,7 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Win;
     [SerializeField] GameObject Lose;
 
-   public static GameManager instance;
+    [SerializeField] GameObject win1Object;
+    [SerializeField] GameObject win2Object;
+
+
+    public static GameManager instance;
     bool isInit;
     public static bool isCredits;
 
@@ -42,6 +46,9 @@ public class GameManager : MonoBehaviour
     public void  onWIn(bool isGood = true)
     {
         Win.SetActive(true);
+        win1Object.SetActive(isGood);
+        win2Object.SetActive(!isGood);
+
     }
 
     public void onLose()
