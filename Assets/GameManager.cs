@@ -5,7 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject Win;
+    [SerializeField] GameObject Lose;
+
+
     bool isInit;
+
+    public void  onWIn()
+    {
+        Win.SetActive(true);
+    }
+
+    public void onLose()
+    {
+        Lose.SetActive(true);
+    }
+
+    public void OnReturnToMainManu()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void Awake()
     {
         GameManager[] allInputManagers = FindObjectsOfType<GameManager>();
@@ -38,6 +58,11 @@ public class GameManager : MonoBehaviour
 
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex == 0 ? 1 : 0, LoadSceneMode.Additive);
         }
+    }
+
+    private void Start()
+    {
+        //onWIn();
     }
 
 
