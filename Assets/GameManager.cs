@@ -24,13 +24,22 @@ public class GameManager : MonoBehaviour
         instance.onLose();
     }
 
+    public void StopPlayersInput()
+    {
+        TopPlayerController topPlayer= FindObjectOfType<TopPlayerController>();
+        LegsPlayerMovment legPlayer = FindObjectOfType<LegsPlayerMovment>();
+        topPlayer.stopMovment();
+        legPlayer.stopMovment();
+
+    }
+
     public void OnCredits()
     {
         isCredits = true;
         SceneManager.LoadScene(2);
     }
 
-    public void  onWIn()
+    public void  onWIn(bool isGood = true)
     {
         Win.SetActive(true);
     }
