@@ -201,30 +201,30 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.CompareTag("Platform"))
         {
             _jumpCount = 0;
         }
-        if(collision.gameObject.tag == "MovingObject")
+        if(collision.gameObject.CompareTag("MovingObject"))
         {
             _canMove = true;
         }
-        if(collision.gameObject.tag == "Border")
+        /*if(collision.gameObject.CompareTag("Border"))
         {
             _isTouchingBorder = true;
-        }
+        }*/
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "MovingObject")
+        if (collision.gameObject.CompareTag("MovingObject"))
         {
             _canMove = false;
         }
-        if (collision.gameObject.tag == "Border")
+        /*if (collision.gameObject.CompareTag("Border"))
         {
             _isTouchingBorder = false;
-        }
+        }*/
     }
 
     public void Stun(int stunAmount = 10)
