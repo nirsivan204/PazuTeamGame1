@@ -180,7 +180,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _movement.y = _jumpSpeed;
         _rb.velocity = _movement;
         _jumpCount++;
-        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(6, 9)]);
+        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(6, 9)], 0.3f);
 
     }
 
@@ -192,7 +192,7 @@ public class LegsPlayerMovment : AbstractPlayerMovement, IStunnable
         _isCheering = true;
         OnCheerAction?.Invoke();
         _levelAnimator.SetAddAnimation("Cheer", true, 0, false);
-        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(2,6)]);
+        _audioSource.PlayOneShot(_clips[UnityEngine.Random.Range(2, 6)]);
 
         this.SetTimer(_cheerTime, () =>
         {
