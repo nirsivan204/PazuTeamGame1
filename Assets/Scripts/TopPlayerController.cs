@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TopPlayerController : AbstractPlayerMovement, IStunnable
 {
@@ -43,6 +44,9 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
 
     public bool _isBeingCheerd;
 
+    public AudioSource AudioSource;
+    public AudioClip[] DashSounds;
+
     private void Awake()
     {
         if (Instance != null)
@@ -79,7 +83,6 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
     }
     public void Dash()
     {
-        print("dash");
         if (isStunned || isCheering)
             return;
 
@@ -87,6 +90,9 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         {
             isDashing = true;
             _speed = _dashSpeed;
+
+            int rand = Random.Range(0, DashSounds.Length);
+            AudioSource.PlayOneShot(DashSounds[rand]);
 
             levelAnimator.SetAddAnimation("Dash", false, 0, false);
 
@@ -103,6 +109,8 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
         {
             isDoubleDashing = true;
             _speed = _doubleDashSpeed;
+            int rand = Random.Range(0, DashSounds.Length);
+            AudioSource.PlayOneShot(DashSounds[rand]);
 
             levelAnimator.SetAddAnimation("Dash", false, 0, false);
 
@@ -196,7 +204,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
          {
              if(_isAboveGap && (!isDashing || !isDoubleDashing))
              {
-                 Debug.Log("You Fell!!");
+                 GameManager.Instance.onLose();
              }
          });
     }
