@@ -196,7 +196,7 @@ public class TopPlayerController : AbstractPlayerMovement, IStunnable
          {
              if(_isAboveGap && (!isDashing || !isDoubleDashing))
              {
-                 Debug.Log("You Fell!!");
+                 GameManager.Instance.onLose();
              }
          });
     }
