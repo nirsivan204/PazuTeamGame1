@@ -317,7 +317,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 14.5
+  orthographic size: 12.9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -583,6 +583,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2206362307596292408, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: _door
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2456628883327900552, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_Name
       value: Hands Player Level Root
@@ -615,9 +619,17 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5226950589595023764, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 5704153450590374172, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_SortingOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793112943919401899, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: _door
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6161243900347727303, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: _door
@@ -693,6 +705,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7874996924797674799, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316527757792383397, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_Size.x
+      value: 4.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8316527757792383397, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_Size.y
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8577415539254124260, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: _door
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8616570054051821852, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
@@ -1334,6 +1358,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 138698916}
+    - target: {fileID: 1313873050206893623, guid: acc8727f32613ca4b86aca25c71d0fdf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCredits
+      objectReference: {fileID: 0}
     - target: {fileID: 5836031281228894958, guid: acc8727f32613ca4b86aca25c71d0fdf, type: 3}
       propertyPath: m_Name
       value: Lose
@@ -1422,6 +1450,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 138698916}
+    - target: {fileID: 8121608773145711841, guid: acc8727f32613ca4b86aca25c71d0fdf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnReturnToMainManu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
