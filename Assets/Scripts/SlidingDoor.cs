@@ -35,7 +35,11 @@ public class SlidingDoor : MonoBehaviour
     [SerializeField] private float _endPositionX;
     [SerializeField] private float _sliderDistancePerFrame;
     [SerializeField] private Door _door;
-    
+
+    public AudioSource AudioSource;
+    public AudioClip OpenDoorSound;
+    public AudioClip CloseDoorSound;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -59,12 +63,14 @@ public class SlidingDoor : MonoBehaviour
         if (doorSwitchedEvent.OpenDoor)
         {
             StopCoroutine(SlideDoor(_startPostionX));
-            StartCoroutine(SlideDoor(_endPositionX));    
+            StartCoroutine(SlideDoor(_endPositionX));
+            AudioSource.PlayOneShot(OpenDoorSound);
         }
         else
         {
             StopCoroutine(SlideDoor(_endPositionX));
-            StartCoroutine(SlideDoor(_startPostionX));    
+            StartCoroutine(SlideDoor(_startPostionX));
+            AudioSource.PlayOneShot(CloseDoorSound);
         }
     }
 
@@ -72,6 +78,8 @@ public class SlidingDoor : MonoBehaviour
     {
         var currentPosition = transform.localPosition;
         var slideDirection = currentPosition.x < endPositionX ? 1 : -1;
+
+
 
         while (currentPosition.x * slideDirection < endPositionX * slideDirection)
         {
