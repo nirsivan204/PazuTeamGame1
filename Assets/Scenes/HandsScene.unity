@@ -591,6 +591,10 @@ PrefabInstance:
       propertyPath: _door
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2596161930398937139, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_Name
+      value: Door Hands 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2740868227818361086, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_SortingOrder
       value: -1
@@ -599,9 +603,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3397525802494537745, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_Name
+      value: Door Hands 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4149398837240847527, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: _door
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4764673676175708363, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_IsTrigger
@@ -613,7 +621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6161243900347727303, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: _door
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6711100634009574568, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: m_SortingOrder
@@ -665,7 +673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7099054451060991813, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: _door
-      value: 0
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383707787719994803, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
+      propertyPath: m_Name
+      value: Door Hands 3
       objectReference: {fileID: 0}
     - target: {fileID: 7777229263561241743, guid: c1bd4c38cfd62774fb95991aec50a0ee, type: 3}
       propertyPath: _controller1
